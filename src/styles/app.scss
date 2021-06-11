@@ -1,0 +1,23 @@
+@import "./_variables.sass";
+@import "~bulma/bulma.sass";
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Merriweather";
+}
+
+.navbar-item img {
+  max-height: initial;
+}
+
+// .navbar {
+//   background-color: #242021;
+// }
+
+.is-text-centered {
+  text-align: center;
+}
