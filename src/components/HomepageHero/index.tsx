@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import heroImage from "../../images/hero.jpeg";
 import { Heading, Container } from "react-bulma-components/esm";
+import { StaticImage } from "gatsby-plugin-image";
 
-const Hero = styled(({ background, ...rest }) => <div {...rest} />)`
-  background-image: ${(props) => `url(${props.background})`};
-  background-size: cover;
+const Hero = styled.div`
   width: 100%;
   height: 1000px;
   position: relative;
@@ -19,12 +17,27 @@ const RelativeContainer = styled(Container)`
 const AbsoluteContainer = styled.div`
   position: absolute;
   bottom: 20rem;
-  max-width: 400px;
+  max-width: 432px;
+  padding-left: 2rem;
 `;
 
 export const HomepageHero = ({ ...rest }) => {
   return (
-    <Hero background={heroImage} {...rest}>
+    <Hero {...rest}>
+      <div
+        css={`
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        `}
+      >
+        <StaticImage
+          src="../../images/hero.jpeg"
+          alt=""
+          placeholder="tracedSVG"
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
       <RelativeContainer>
         <AbsoluteContainer>
           <Heading level={1} className="has-text-white" size={1}>

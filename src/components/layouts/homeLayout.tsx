@@ -16,8 +16,12 @@ export const HomeLayout = ({ children, hero }) => {
       </main>
       <Footer>
         <Container>
-          <Content style={{ textAlign: "center" }}>
-            <p>Attila Press</p>
+          <Content>
+            <p className="is-pulled-left mb-0">JameyGittings</p>
+            <p className="is-pulled-right mb-0 is-size-6">
+              © Copyright 2021 JameyGittings
+            </p>
+            <span className="is-clearfix" />
           </Content>
         </Container>
       </Footer>
