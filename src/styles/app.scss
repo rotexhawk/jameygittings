@@ -1,13 +1,17 @@
 @import "./_variables.sass";
 @import "~bulma/bulma.sass";
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Merriweather";
+.content {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Libre Baskerville", serif;
+    font-weight: normal;
+    color: #e4573d;
+  }
 }
 
 .navbar-item img {
@@ -20,4 +24,16 @@ h6 {
 
 .is-text-centered {
   text-align: center;
+}
+
+.pb-7 {
+  padding-bottom: 3.5rem !important;
+}
+
+.pb-8 {
+  padding-bottom: 4rem !important;
+}
+
+.pb-9 {
+  padding-bottom: 4.5rem !important;
 }

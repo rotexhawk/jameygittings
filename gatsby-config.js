@@ -28,7 +28,7 @@ module.exports = {
         fonts: {
           google: [
             {
-              family: "Merriweather",
+              family: "Libre+Baskerville",
               variants: ["400"],
             },
             {
