@@ -59,7 +59,7 @@ export const Books = ({ background }) => {
           <HeadingImage size={2} level={2} background={background}>
             My Books
           </HeadingImage>
-          <Columns>
+          <Columns className="is-centered">
             <Columns.Column size={8} className="has-text-centered pb-6 mb-6">
               <p>
                 To date I've written four books one is a sequel, so the works
