@@ -4,7 +4,10 @@ import { Content, Footer, Container } from "react-bulma-components/esm";
 import { TopNav } from "../TopNav";
 require("../../styles/app.scss");
 
-const PageLayout = styled.div``;
+const PageLayout = styled.div`
+  z-index: 3;
+  position: relative;
+`;
 
 export const HomeLayout = ({ children, hero }) => {
   return (

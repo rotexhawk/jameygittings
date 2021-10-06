@@ -30,6 +30,17 @@ export const TopNav = ({}) => {
             <Navbar.Item href="/what-i-want-from-readers" key="what-i-want">
               What I Want From Readers
             </Navbar.Item>
+            <Navbar.Item href="/books" key="books">
+              Books
+            </Navbar.Item>
+            <Navbar.Item>
+              <a
+                href="mailto:jameygittings@gmail.com"
+                className="button is-primary"
+              >
+                Contact
+              </a>
+            </Navbar.Item>
           </Navbar.Container>
         </Navbar.Menu>
       </Container>
