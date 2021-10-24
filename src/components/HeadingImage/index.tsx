@@ -12,7 +12,7 @@ const Wrapper = styled(({ background, ...rest }) => <div {...rest} />)`
 export const HeadingImage = ({ background, children, ...rest }) => {
   return (
     <Wrapper background={background} {...rest} className="mb-5">
-      <img src={background} />
+      {background ? <img src={background} /> : null}
       <Heading {...rest} className="mt-3">
         {children}
       </Heading>
