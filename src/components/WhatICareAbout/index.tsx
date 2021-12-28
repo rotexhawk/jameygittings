@@ -1,3 +1,4 @@
+import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 import {
   Container,
@@ -11,6 +12,13 @@ export const WhatICareAbout = ({ background }) => {
   return (
     <Section className="has-text-centered">
       <Container>
+        <StaticImage
+          src="../../images/jamey-gittings.jpg"
+          alt="jamey-gittings"
+          width={500}
+          placeholder="tracedSVG"
+          className="mb-5"
+        />
         <HeadingImage size={2} level={2} background={background}>
           What I Care About
         </HeadingImage>
@@ -51,16 +59,8 @@ export const WhatICareAbout = ({ background }) => {
               successful, and unsuccessful, attempts to resolve them.
               Particularly the unsuccessful
             </p>
-            <a href="/what-i-care-about">
-              <Button
-                color="primary"
-                css={`
-                  margin: 2rem auto 0 auto;
-                  display: block;
-                `}
-              >
-                Read More
-              </Button>
+            <a href="/what-i-care-about" className="button is-info">
+              Read More
             </a>
           </Columns.Column>
         </Columns>

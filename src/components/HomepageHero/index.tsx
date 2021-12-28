@@ -16,7 +16,7 @@ const RelativeContainer = styled(Container)`
 `;
 
 const AbsoluteContainer = styled.div`
-  padding-top: 15%;
+  padding-top: 20%;
 `;
 
 const BannerQuoteWrapper = styled.div`

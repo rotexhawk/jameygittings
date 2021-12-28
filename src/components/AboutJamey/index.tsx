@@ -21,7 +21,7 @@ export const AboutJamey = ({}) => {
           <Columns>
             <Columns.Column size="one-third">
               <StaticImage
-                src="../../images/jamey-gittings.jpg"
+                src="../../images/jamey-pic-two.jpg"
                 alt="jamey-gittings"
                 width={500}
                 placeholder="tracedSVG"
