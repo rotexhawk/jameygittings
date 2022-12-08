@@ -20,9 +20,9 @@ export const HomeLayout = ({ children, hero }) => {
       <Footer>
         <Container>
           <Content>
-            <p className="is-pulled-left mb-0">JameyGittings</p>
+            <p className="is-pulled-left mb-0">Jamey Gittings</p>
             <p className="is-pulled-right mb-0 is-size-6">
-              © Copyright 2021 JameyGittings
+              © Copyright 2021 Jamey Gittings
             </p>
             <span className="is-clearfix" />
           </Content>

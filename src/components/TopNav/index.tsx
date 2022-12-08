@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Navbar } from "react-bulma-components/esm";
+import { Container, Navbar } from "react-bulma-components";
 import styled from "styled-components";
 
 const StyledNav = styled(Navbar)`
@@ -33,13 +33,8 @@ export const TopNav = ({}) => {
             <Navbar.Item href="/books" key="books">
               Books
             </Navbar.Item>
-            <Navbar.Item>
-              <a
-                href="mailto:jameygittings@gmail.com"
-                className="button is-primary"
-              >
-                Contact
-              </a>
+            <Navbar.Item href="mailto:jameygittings@gmail.com">
+              <span className="button is-primary">Contact</span>
             </Navbar.Item>
           </Navbar.Container>
         </Navbar.Menu>

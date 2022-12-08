@@ -2,7 +2,7 @@ import React from "react";
 import { Heading } from "react-bulma-components/esm";
 import styled from "styled-components";
 
-const Wrapper = styled(({ background, ...rest }) => <div {...rest} />)`
+const Wrapper = styled(({ ...rest }) => <div {...rest} />)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@ const Wrapper = styled(({ background, ...rest }) => <div {...rest} />)`
 
 export const HeadingImage = ({ background, children, ...rest }) => {
   return (
-    <Wrapper background={background} {...rest} className="mb-5">
+    <Wrapper {...rest} className="mb-5">
       {background ? <img src={background} /> : null}
       <Heading {...rest} className="mt-3">
         {children}

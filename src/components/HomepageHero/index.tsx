@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Container } from "react-bulma-components/esm";
+import { Container } from "react-bulma-components";
 import { StaticImage } from "gatsby-plugin-image";
 
 const Hero = styled.div`
@@ -58,7 +58,6 @@ export const HomepageHero = ({ ...rest }) => {
         <StaticImage
           src="../../images/hero.jpg"
           alt=""
-          placeholder="tracedSVG"
           style={{ width: "100%", height: "100%" }}
         />
       </div>
