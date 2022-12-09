@@ -24,7 +24,6 @@ const CoverImage = styled(GatsbyImage)`
     -10px 10px 10px -5px rgb(40 42 47 / 10%);
 `;
 export const Books = ({ blocks }) => {
-  console.log("blocksforbooks", blocks);
   const images = useStaticQuery(graphql`
     query {
       smallPox: file(relativePath: { regex: "/raccoons/" }) {
@@ -94,7 +93,7 @@ export const Books = ({ blocks }) => {
   const fetishText = getBlockHtml("fetish-begin", "other-offerings");
 
   return (
-    <Box>
+    <Box id="books">
       <Section centered="true">
         <Container>
           <Columns className="is-centered">
@@ -120,20 +119,23 @@ export const Books = ({ blocks }) => {
               title={meatOfTheHorseTitle.innerHtml}
             >
               {meatOfTheHorseText}
-              <ArrowLink to="./" className="is-size-6">
+              <ArrowLink
+                to="/meat-of-the-horse/chapter-one"
+                className="is-size-6"
+              >
                 <RightIcon />
               </ArrowLink>
             </BookContainer>
 
             <BookContainer image={images.knock} title={attilaTitle.innerHtml}>
               {attilaText}
-              <ArrowLink to="./" className="is-size-6">
+              <ArrowLink to="/attila/chapter-one" className="is-size-6">
                 <RightIcon />
               </ArrowLink>
             </BookContainer>
             <BookContainer image={images.coming} title={fetishTitle.innerHtml}>
               {fetishText}
-              <ArrowLink to="./" className="is-size-6">
+              <ArrowLink to="/fetish/chapter-one" className="is-size-6">
                 <RightIcon />
               </ArrowLink>
             </BookContainer>

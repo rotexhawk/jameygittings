@@ -1,4 +1,4 @@
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { useState } from "react";
 import { Columns } from "react-bulma-components";
 import styled from "styled-components";
@@ -98,7 +98,7 @@ const TableOfContents = styled.h3`
 `;
 
 const LeftColumn = styled(Columns.Column)`
-  background-color: white;
+  background-color: ${props => props.background ?? "white"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -107,7 +107,7 @@ const LeftColumn = styled(Columns.Column)`
 `;
 
 const LeftColumnContent = styled.div`
-  background-color: white;
+  background-color: ${props => props.background ?? "white"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,7 +143,22 @@ export const VerticalNavBar = ({ isOpen, children }) => {
   );
 };
 
-export const BookLayout = ({ cover, title, navbarContent, children }) => {
+type BookLayoutProps = {
+  cover?: IGatsbyImageData;
+  title: string;
+  navbarContent: JSX.Element;
+  children: JSX.Element;
+  leftColumnBackground?: string;
+  rightColumnBackground?: string;
+};
+export const BookLayout = ({
+  cover,
+  title,
+  navbarContent,
+  children,
+  leftColumnBackground,
+  rightColumnBackground,
+}: BookLayoutProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
@@ -157,12 +172,14 @@ export const BookLayout = ({ cover, title, navbarContent, children }) => {
       </BookBar>
       <Wrapper>
         <Columns>
-          <LeftColumn size="two-fifths">
-            <LeftColumnContent>
-              <GatsbyImage image={cover} alt={title} />
+          <LeftColumn size="two-fifths" background={leftColumnBackground}>
+            <LeftColumnContent background={leftColumnBackground}>
+              <GatsbyImage image={cover!} alt={title} />
             </LeftColumnContent>
           </LeftColumn>
-          <RightColumn>{children}</RightColumn>
+          <RightColumn background={rightColumnBackground}>
+            {children}
+          </RightColumn>
         </Columns>
       </Wrapper>
     </div>

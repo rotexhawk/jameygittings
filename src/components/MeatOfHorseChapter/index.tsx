@@ -39,13 +39,13 @@ const NextItem = styled.p`
   text-indent: 0;
 `;
 
-export const EradicationChapter = ({ children, page }) => {
+export const MeatOfHorseChapter = ({ children, page }) => {
   const images = useStaticQuery(graphql`
     query {
-      smallPox: file(relativePath: { regex: "/raccoons/" }) {
+      horse: file(relativePath: { regex: "/meat-of-the-horse-cover.jpg/" }) {
         childImageSharp {
           gatsbyImageData(
-            width: 500
+            width: 600
             placeholder: BLURRED
             formats: [AUTO, WEBP, AVIF]
           )
@@ -58,12 +58,12 @@ export const EradicationChapter = ({ children, page }) => {
     switch (page) {
       case 1:
         return {
-          link: "/eradication-of-smallpox/chapter-one",
+          link: "/meat-of-the-horse/chapter-one",
           text: "Chapter One",
         };
       case 2:
         return {
-          link: "/eradication-of-smallpox/chapter-two",
+          link: "/meat-of-the-horse/chapter-two",
           text: "Chapter Two",
         };
       case 3:
@@ -76,17 +76,18 @@ export const EradicationChapter = ({ children, page }) => {
     }
   };
 
-  const cover = getImage(images.smallPox);
+  const cover = getImage(images.horse);
+
+  console.log("cover", cover);
 
   const NavbarContent = () => {
     return (
       <>
-        <StyledLink to="/eradication-of-smallpox/foreword">Foreword</StyledLink>
-        <StyledLink to="/eradication-of-smallpox/chapter-one">
-          <Chapter>Chapter One</Chapter> The Last Job in Town
+        <StyledLink to="/meat-of-the-horse/chapter-one">
+          <Chapter>Chapter One</Chapter> A Meal Called Horse
         </StyledLink>
-        <StyledLink to="/eradication-of-smallpox/chapter-two">
-          <Chapter>Chapter Two</Chapter> A Poor Case for Opponents
+        <StyledLink to="/meat-of-the-horse/chapter-two">
+          <Chapter>Chapter Two</Chapter> Okapi Woman and the Lemon Guy
         </StyledLink>
         <StyledLink to="/">
           <Chapter>
@@ -103,8 +104,9 @@ export const EradicationChapter = ({ children, page }) => {
   return (
     <BookLayout
       cover={cover}
-      title="Eradication of Smallpox"
+      title="Meat of the Horse"
       navbarContent={<NavbarContent />}
+      leftColumnBackground=""
     >
       <Section>
         <Content>

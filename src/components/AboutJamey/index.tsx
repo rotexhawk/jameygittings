@@ -9,7 +9,6 @@ import {
 import { StaticImage } from "gatsby-plugin-image";
 
 export const AboutJamey = ({ children }) => {
-  console.log("children", children);
   return (
     <Container>
       <Box

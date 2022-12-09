@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading } from "react-bulma-components/esm";
+import { Heading } from "react-bulma-components";
 import styled from "styled-components";
 
 const Wrapper = styled(({ ...rest }) => <div {...rest} />)`
@@ -9,7 +9,22 @@ const Wrapper = styled(({ ...rest }) => <div {...rest} />)`
   flex-direction: column;
 `;
 
-export const HeadingImage = ({ background, children, ...rest }) => {
+type HeadingImage = {
+  background?: React.ReactNode;
+  children: React.JSX;
+  size?: 1 | 2 | 3 | 4 | 5 | 6;
+  weight?: "light" | "normal" | "semibold" | "bold";
+  subtitle?: boolean;
+  heading?: boolean;
+  spaced?: boolean;
+  renderAs?: string;
+};
+
+export const HeadingImage = ({
+  background,
+  children,
+  ...rest
+}: HeadingImage) => {
   return (
     <Wrapper {...rest} className="mb-5">
       {background ? <img src={background} /> : null}

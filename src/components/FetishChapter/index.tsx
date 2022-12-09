@@ -39,10 +39,10 @@ const NextItem = styled.p`
   text-indent: 0;
 `;
 
-export const EradicationChapter = ({ children, page }) => {
+export const FetishChapter = ({ children, page }) => {
   const images = useStaticQuery(graphql`
     query {
-      smallPox: file(relativePath: { regex: "/raccoons/" }) {
+      fetish: file(relativePath: { regex: "/fetish/" }) {
         childImageSharp {
           gatsbyImageData(
             width: 500
@@ -58,12 +58,12 @@ export const EradicationChapter = ({ children, page }) => {
     switch (page) {
       case 1:
         return {
-          link: "/eradication-of-smallpox/chapter-one",
+          link: "/fetish/chapter-one",
           text: "Chapter One",
         };
       case 2:
         return {
-          link: "/eradication-of-smallpox/chapter-two",
+          link: "/fetish/chapter-two",
           text: "Chapter Two",
         };
       case 3:
@@ -76,16 +76,15 @@ export const EradicationChapter = ({ children, page }) => {
     }
   };
 
-  const cover = getImage(images.smallPox);
+  const cover = getImage(images.fetish);
 
   const NavbarContent = () => {
     return (
       <>
-        <StyledLink to="/eradication-of-smallpox/foreword">Foreword</StyledLink>
-        <StyledLink to="/eradication-of-smallpox/chapter-one">
+        <StyledLink to="/fetish/chapter-one">
           <Chapter>Chapter One</Chapter> The Last Job in Town
         </StyledLink>
-        <StyledLink to="/eradication-of-smallpox/chapter-two">
+        <StyledLink to="/fetish/chapter-two">
           <Chapter>Chapter Two</Chapter> A Poor Case for Opponents
         </StyledLink>
         <StyledLink to="/">
@@ -103,8 +102,9 @@ export const EradicationChapter = ({ children, page }) => {
   return (
     <BookLayout
       cover={cover}
-      title="Eradication of Smallpox"
+      title="Fetish"
       navbarContent={<NavbarContent />}
+      leftColumnBackground="#E2D4DC"
     >
       <Section>
         <Content>

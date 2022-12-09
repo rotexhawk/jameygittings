@@ -2,22 +2,25 @@ import React from "react";
 import { Container, Navbar } from "react-bulma-components";
 import styled from "styled-components";
 
-const StyledNav = styled(Navbar)`
+const StyledNav = styled(({ isAbsolute, ...rest }) => <Navbar {...rest} />)`
+  ${props =>
+    props.isAbsolute &&
+    `
   position: absolute;
   left: 0;
-  right: 0;
+  right: 0;`}
 `;
 
 const TextLogo = styled.span`
   font-size: 1.5rem;
 `;
 
-export const TopNav = ({}) => {
+export const TopNav = ({ isAbsolute }) => {
   return (
-    <StyledNav>
+    <StyledNav isAbsolute={isAbsolute}>
       <Container>
         <Navbar.Brand>
-          <Navbar.Item renderAs="a" href="#">
+          <Navbar.Item renderAs="a" href="/">
             <TextLogo>Jamey Gittings</TextLogo>
           </Navbar.Item>
           <Navbar.Burger />
@@ -30,10 +33,10 @@ export const TopNav = ({}) => {
             <Navbar.Item href="/what-i-want-from-readers" key="what-i-want">
               What I Want From Readers
             </Navbar.Item>
-            <Navbar.Item href="/books" key="books">
+            <Navbar.Item href="#books" key="books">
               Books
             </Navbar.Item>
-            <Navbar.Item href="mailto:jameygittings@gmail.com">
+            <Navbar.Item href="/contact">
               <span className="button is-primary">Contact</span>
             </Navbar.Item>
           </Navbar.Container>

@@ -15,7 +15,6 @@ import { blockTextGetter, toBlockHtml } from "../utils/helpers";
 
 const Page = ({ data }) => {
   const { wpPage } = data;
-  console.log("homepage data", wpPage);
 
   const getBlockHtml = (beginningBlock: string, endingBlock: string) => {
     const getBlockText = blockTextGetter(wpPage.blocks);

@@ -1,21 +1,21 @@
+import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
-import styled from "styled-components";
-import { Content, Footer, Container } from "react-bulma-components/esm";
+import { Content, Footer, Container, Section } from "react-bulma-components";
 import { TopNav } from "../TopNav";
-require("../../styles/app.scss");
 
-const PageLayout = styled.div`
-  z-index: 3;
-  position: relative;
-`;
-
-export const HomeLayout = ({ children, hero }) => {
+export const PageLayout = ({ children }) => {
   return (
     <Content>
       <TopNav isAbsolute={true} />
-      {hero}
+      <StaticImage
+        src="../../images/redwood-background.jpeg"
+        alt="redwood-background"
+        placeholder="tracedSVG"
+      />
       <main role="main">
-        <PageLayout>{children}</PageLayout>
+        <Section>
+          <Container>{children}</Container>
+        </Section>
       </main>
       <Footer>
         <Container>

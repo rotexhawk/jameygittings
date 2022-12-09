@@ -15,7 +15,6 @@ export type Block = {
 };
 
 export const singleBlockGetter = (blocks: Block[]) => (name: string) => {
-  console.log("singleBlock", blocks);
   return blocks.filter(({ attributes }) =>
     attributes[0]?.value.includes(name)
   )[0];
@@ -26,7 +25,6 @@ export const blockTextGetter =
     const blockSplice: Block[] = [];
     let firstBlockFound = false;
     for (const block of blocks) {
-      console.log("blocks are in order", block);
       const { name, value } = block.attributes[0] ?? {};
       if (
         !firstBlockFound &&
@@ -37,10 +35,9 @@ export const blockTextGetter =
         blockSplice.push(block);
       } else if (firstBlockFound) {
         if (endingBlock && value?.includes(endingBlock)) {
-          console.log("breaking because", value, endingBlock);
           break;
         }
-        console.log("gets here", block);
+
         blockSplice.push(block);
       }
     }
@@ -48,7 +45,6 @@ export const blockTextGetter =
   };
 
 export const toBlockHtml = (blocks: Block[]) => {
-  console.log("blocks22", blocks);
   return blocks.map(block => {
     const classNames = block.attributes
       .filter(({ name }) => name === "className")

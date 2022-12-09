@@ -39,10 +39,10 @@ const NextItem = styled.p`
   text-indent: 0;
 `;
 
-export const EradicationChapter = ({ children, page }) => {
+export const AttilaChapter = ({ children, page }) => {
   const images = useStaticQuery(graphql`
     query {
-      smallPox: file(relativePath: { regex: "/raccoons/" }) {
+      attila: file(relativePath: { regex: "/knock/" }) {
         childImageSharp {
           gatsbyImageData(
             width: 500
@@ -58,12 +58,12 @@ export const EradicationChapter = ({ children, page }) => {
     switch (page) {
       case 1:
         return {
-          link: "/eradication-of-smallpox/chapter-one",
+          link: "/attila/chapter-one",
           text: "Chapter One",
         };
       case 2:
         return {
-          link: "/eradication-of-smallpox/chapter-two",
+          link: "/attila/chapter-two",
           text: "Chapter Two",
         };
       case 3:
@@ -76,17 +76,16 @@ export const EradicationChapter = ({ children, page }) => {
     }
   };
 
-  const cover = getImage(images.smallPox);
+  const cover = getImage(images.attila);
 
   const NavbarContent = () => {
     return (
       <>
-        <StyledLink to="/eradication-of-smallpox/foreword">Foreword</StyledLink>
-        <StyledLink to="/eradication-of-smallpox/chapter-one">
-          <Chapter>Chapter One</Chapter> The Last Job in Town
+        <StyledLink to="/attila/chapter-one">
+          <Chapter>Chapter One</Chapter> Bad Mr. 21
         </StyledLink>
-        <StyledLink to="/eradication-of-smallpox/chapter-two">
-          <Chapter>Chapter Two</Chapter> A Poor Case for Opponents
+        <StyledLink to="/attila/chapter-two">
+          <Chapter>Chapter Two</Chapter> The PlayGroup
         </StyledLink>
         <StyledLink to="/">
           <Chapter>
@@ -103,7 +102,7 @@ export const EradicationChapter = ({ children, page }) => {
   return (
     <BookLayout
       cover={cover}
-      title="Eradication of Smallpox"
+      title="Knock Three Times and Ask for Attila"
       navbarContent={<NavbarContent />}
     >
       <Section>

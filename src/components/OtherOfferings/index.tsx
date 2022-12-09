@@ -7,13 +7,13 @@ import {
 } from "react-bulma-components/esm";
 import { HeadingImage } from "../HeadingImage";
 
-export const OtherOfferings = ({ background }) => {
+export const OtherOfferings = ({}) => {
   return (
     <Section className="has-text-centered pb-8">
       <Container>
         <Columns centered="true">
           <Columns.Column size={8}>
-            <HeadingImage size={2} level={2} background={background}>
+            <HeadingImage size={2} renderAs="h2">
               Other Offerings
             </HeadingImage>
             <p>
