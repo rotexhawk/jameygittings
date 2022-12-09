@@ -1,17 +1,32 @@
 import React from "react";
-import { Heading } from "react-bulma-components/esm";
+import { Heading } from "react-bulma-components";
 import styled from "styled-components";
 
-const Wrapper = styled(({ background, ...rest }) => <div {...rest} />)`
+const Wrapper = styled(({ ...rest }) => <div {...rest} />)`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 `;
 
-export const HeadingImage = ({ background, children, ...rest }) => {
+type HeadingImage = {
+  background?: React.ReactNode;
+  children: React.JSX;
+  size?: 1 | 2 | 3 | 4 | 5 | 6;
+  weight?: "light" | "normal" | "semibold" | "bold";
+  subtitle?: boolean;
+  heading?: boolean;
+  spaced?: boolean;
+  renderAs?: string;
+};
+
+export const HeadingImage = ({
+  background,
+  children,
+  ...rest
+}: HeadingImage) => {
   return (
-    <Wrapper background={background} {...rest} className="mb-5">
+    <Wrapper {...rest} className="mb-5">
       {background ? <img src={background} /> : null}
       <Heading {...rest} className="mt-3">
         {children}

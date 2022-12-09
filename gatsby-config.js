@@ -7,7 +7,7 @@ module.exports = {
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-netlify",
     {
       resolve: "gatsby-plugin-google-analytics",
       options: {
@@ -35,6 +35,10 @@ module.exports = {
               family: "Open+Sans",
               variants: ["400"],
             },
+            {
+              family: "Bodoni+Moda",
+              variants: ["400", "500", "600"],
+            },
           ],
         },
       },
@@ -44,6 +48,24 @@ module.exports = {
       options: {
         sassOptions: {
           includePaths: ["./src/styles"],
+        },
+      },
+    },
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        verbose: true,
+        url: "https://backend.jameygittings.com/graphql",
+        type: {
+          Plugin: {
+            exclude: true,
+          },
+        },
+        debug: {
+          disableCompatibilityCheck: true,
+          graphql: {
+            panicOnError: false,
+          },
         },
       },
     },
