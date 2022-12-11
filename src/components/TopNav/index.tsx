@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Navbar } from "react-bulma-components";
 import styled from "styled-components";
 
@@ -16,14 +16,26 @@ const TextLogo = styled.span`
 `;
 
 export const TopNav = ({ isAbsolute }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    console.log("calling open", isOpen);
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <StyledNav isAbsolute={isAbsolute}>
+    <StyledNav isAbsolute={isAbsolute} active={isOpen}>
       <Container>
         <Navbar.Brand>
           <Navbar.Item renderAs="a" href="/">
             <TextLogo>Jamey Gittings</TextLogo>
           </Navbar.Item>
-          <Navbar.Burger />
+          <Navbar.Burger
+            onClick={handleToggle}
+            aria-label="nav-burger"
+            aria-haspopup="true"
+            aria-expanded={isOpen}
+          />
         </Navbar.Brand>
         <Navbar.Menu>
           <Navbar.Container align="right">
@@ -33,7 +45,7 @@ export const TopNav = ({ isAbsolute }) => {
             <Navbar.Item href="/what-i-want-from-readers" key="what-i-want">
               What I Want From Readers
             </Navbar.Item>
-            <Navbar.Item href="#books" key="books">
+            <Navbar.Item href="/#books" key="books">
               Books
             </Navbar.Item>
             <Navbar.Item href="/contact">

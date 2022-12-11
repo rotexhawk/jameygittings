@@ -14,13 +14,19 @@
   }
 }
 
+.content p:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
 .navbar-item img {
   max-height: initial;
 }
 
-// .navbar {
-//   background-color: #242021;
-// }
+@media screen and (max-width: 1023px) {
+  .navbar-brand .navbar-menu.is-active {
+    background-color: #242021;
+  }
+}
 
 .is-text-centered {
   text-align: center;

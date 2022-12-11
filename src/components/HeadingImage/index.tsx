@@ -2,7 +2,7 @@ import React from "react";
 import { Heading } from "react-bulma-components";
 import styled from "styled-components";
 
-const Wrapper = styled(({ ...rest }) => <div {...rest} />)`
+const Wrapper = styled(({ renderAs, ...rest }) => <div {...rest} />)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,7 +17,7 @@ type HeadingImage = {
   subtitle?: boolean;
   heading?: boolean;
   spaced?: boolean;
-  renderAs?: string;
+  renderAs?: any;
 };
 
 export const HeadingImage = ({

@@ -3,15 +3,24 @@ import React from "react";
 import { Content, Footer, Container, Section } from "react-bulma-components";
 import { TopNav } from "../TopNav";
 
-export const PageLayout = ({ children }) => {
+type PageLayoutProps = {
+  children: any;
+  hero?: any;
+};
+
+export const PageLayout = ({ children, hero }: PageLayoutProps) => {
   return (
     <Content>
       <TopNav isAbsolute={true} />
-      <StaticImage
-        src="../../images/redwood-background.jpeg"
-        alt="redwood-background"
-        placeholder="tracedSVG"
-      />
+      {hero ? (
+        hero
+      ) : (
+        <StaticImage
+          src="../../images/redwood-background.jpeg"
+          alt="redwood-background"
+          placeholder="tracedSVG"
+        />
+      )}
       <main role="main">
         <Section>
           <Container>{children}</Container>

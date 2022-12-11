@@ -5,7 +5,6 @@ import {
   Columns,
   Button,
 } from "react-bulma-components/esm";
-import { HeadingImage } from "../HeadingImage";
 
 export const WhatIWantFromReaders = ({ children }) => {
   return (

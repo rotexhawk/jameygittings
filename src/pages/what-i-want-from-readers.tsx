@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import { Heading } from "react-bulma-components";
+import { Heading, Section } from "react-bulma-components";
 import { PageLayout } from "../components/layouts/pageLayout";
 
 const WhatIWantFromReaders = ({ data }) => {
@@ -8,10 +8,12 @@ const WhatIWantFromReaders = ({ data }) => {
   const { title, content } = wpPage;
   return (
     <PageLayout>
-      <Heading size={3} renderAs="h1">
-        {title}
-      </Heading>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
+      <Section>
+        <Heading size={3} renderAs="h1" className="mb-6">
+          {title}
+        </Heading>
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      </Section>
     </PageLayout>
   );
 };
