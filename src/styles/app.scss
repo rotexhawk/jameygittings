@@ -23,7 +23,8 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .navbar-brand .navbar-menu.is-active {
+  .navbar-menu.is-active {
+    height: 100vh;
     background-color: #242021;
   }
 }
