@@ -73,7 +73,7 @@ const VerticalNav = styled.nav`
 `;
 
 const BookTitle = styled.div`
-  @media screen and (max-width: 1023px){ transform: rotate(90deg);
+  transform: rotate(90deg);
   transform-origin: top left;
   position: absolute;
   left: 5rem;
@@ -81,7 +81,6 @@ const BookTitle = styled.div`
   line-height: 1;
   width: 24rem;
   height: 2em;
-  
 `;
 
 const Wrapper = styled.div`
