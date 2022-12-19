@@ -12,6 +12,7 @@ import {
   Notification,
   Button,
   Columns,
+  Section,
 } from "react-bulma-components";
 import { PageLayout } from "../components/layouts/pageLayout";
 
@@ -116,37 +117,57 @@ const _Contact = () => {
               <p>{apiError}</p>
             </Notification>
           )}
+          {formSubmitted && (
+            <Section className="mb-6 pl-0 pt-0">
+              <Notification color="success">
+                <p>Email Sent!</p>
+              </Notification>
+            </Section>
+          )}
+          {!formSubmitted && (
+            <>
+              <Form.Field className="mb-6">
+                <Form.Label>Name</Form.Label>
+                <Form.Control>
+                  <Form.Input value={name} onChange={handFormChange(setName)} />
+                </Form.Control>
+              </Form.Field>
+              <Form.Field className="mb-6">
+                <Form.Label>Email</Form.Label>
+                <Form.Control>
+                  <Form.Input
+                    type="email"
+                    onChange={handFormChange(setEmail)}
+                  />
+                </Form.Control>
+              </Form.Field>
+              <Form.Field className="mb-6">
+                <Form.Label>Message</Form.Label>
+                <Form.Control>
+                  <Form.Textarea onChange={handFormChange(setMessage)} />
+                </Form.Control>
+              </Form.Field>
 
-          <Form.Field className="mb-6">
-            <Form.Label>Name</Form.Label>
-            <Form.Control>
-              <Form.Input value={name} onChange={handFormChange(setName)} />
-            </Form.Control>
-          </Form.Field>
-          <Form.Field className="mb-6">
-            <Form.Label>Email</Form.Label>
-            <Form.Control>
-              <Form.Input type="email" onChange={handFormChange(setEmail)} />
-            </Form.Control>
-          </Form.Field>
-          <Form.Field className="mb-6">
-            <Form.Label>Message</Form.Label>
-            <Form.Control>
-              <Form.Textarea onChange={handFormChange(setMessage)} />
-            </Form.Control>
-          </Form.Field>
-
-          <Form.Field>
-            <Form.Control>
-              <GoogleReCaptcha
-                onVerify={onVerify}
-                refreshReCaptcha={refreshReCaptcha}
-              />
-              <Button onClick={onSubmit} disabled={!canSubmit()}>
-                Submit
-              </Button>
-            </Form.Control>
-          </Form.Field>
+              <Form.Field>
+                <Form.Control
+                  style={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  <GoogleReCaptcha
+                    onVerify={onVerify}
+                    refreshReCaptcha={refreshReCaptcha}
+                  />
+                  <Button
+                    color="primary"
+                    onClick={onSubmit}
+                    disabled={!canSubmit()}
+                    loading={isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                </Form.Control>
+              </Form.Field>
+            </>
+          )}
         </Columns.Column>
       </Columns>
     </PageLayout>
