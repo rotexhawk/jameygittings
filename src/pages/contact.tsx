@@ -70,10 +70,7 @@ const _Contact = () => {
         setIsSubmitting(true);
         const response = await axios.post(
           "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.on.aws/",
-          { name, from: email, message, token, website: "JameyGittings.com" },
-          {
-            headers: { "Access-Control-Allow-Origin": "*" },
-          }
+          { name, from: email, message, token, website: "JameyGittings.com" }
         );
         console.log("response", response);
         setIsSubmitting(false);
