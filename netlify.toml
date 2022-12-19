@@ -2,3 +2,8 @@
 #   command = "pnpm run build"
 [[plugins]]
 package = "@netlify/plugin-gatsby"
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
