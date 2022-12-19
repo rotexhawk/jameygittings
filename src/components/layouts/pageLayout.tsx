@@ -2,6 +2,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 import { Content, Footer, Container, Section } from "react-bulma-components";
 import { TopNav } from "../TopNav";
+require("../../styles/app.scss");
 
 type PageLayoutProps = {
   children: any;

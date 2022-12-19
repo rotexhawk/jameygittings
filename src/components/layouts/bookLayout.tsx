@@ -2,6 +2,7 @@ import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
 import React, { useState } from "react";
 import { Columns } from "react-bulma-components";
 import styled from "styled-components";
+require("../../styles/app.scss");
 
 const Bar = styled.header`
   position: fixed;
