@@ -1,5 +1,11 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import axios, { AxiosError } from "axios";
+import styled from "styled-components";
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
+
 import {
   Heading,
   Form,
@@ -9,27 +15,62 @@ import {
 } from "react-bulma-components";
 import { PageLayout } from "../components/layouts/pageLayout";
 
-const Contact = () => {
+const NotificationButton = styled(Button)`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: white;
+  &:before,
+  &:after {
+    content: "";
+    width: 21px;
+    height: 1px;
+    background: white;
+    display: block;
+    position: absolute;
+    left: 5px;
+    transition: all 0.2s ease-in-out 0s;
+  }
+  &:before {
+    top: 13px;
+    transform: rotate(45deg) translate(3px, 3px);
+  }
+  &:after{
+    top: 22px;
+    transform: rotate(-45deg) translate(4px, -3px);
+  }
+}
+`;
+
+const _Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [formSubmitted, setFormSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apiError, setApiError] = useState("");
+  const [token, setToken] = useState("");
+  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+
   const handFormChange = updater => e => {
-    if (apiError) {
-      setApiError("");
-    }
+    reset();
     updater(e.target.value);
   };
+
+  const onVerify = useCallback(token => {
+    setToken(token);
+  }, []);
 
   const onSubmit = () => {
     const post = async () => {
       try {
+        setRefreshReCaptcha(r => !r);
         setIsSubmitting(true);
         const response = await axios.post(
           "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.on.aws/",
-          { name, email, message }
+          { name, from: email, message, token, website: "JameyGittings.com" }
         );
         console.log("response", response);
         setIsSubmitting(false);
@@ -49,6 +90,16 @@ const Contact = () => {
     );
   };
 
+  const reset = () => {
+    setApiError("");
+    setIsSubmitting(false);
+    setFormSubmit(false);
+  };
+
+  const closeNotification = () => {
+    reset();
+  };
+
   return (
     <PageLayout>
       <Columns centered>
@@ -61,9 +112,11 @@ const Contact = () => {
           </p>
           {apiError && (
             <Notification color="danger">
+              <NotificationButton onClick={closeNotification} />
               <p>{apiError}</p>
             </Notification>
           )}
+
           <Form.Field className="mb-6">
             <Form.Label>Name</Form.Label>
             <Form.Control>
@@ -82,8 +135,13 @@ const Contact = () => {
               <Form.Textarea onChange={handFormChange(setMessage)} />
             </Form.Control>
           </Form.Field>
+
           <Form.Field>
             <Form.Control>
+              <GoogleReCaptcha
+                onVerify={onVerify}
+                refreshReCaptcha={refreshReCaptcha}
+              />
               <Button onClick={onSubmit} disabled={!canSubmit()}>
                 Submit
               </Button>
@@ -92,6 +150,14 @@ const Contact = () => {
         </Columns.Column>
       </Columns>
     </PageLayout>
+  );
+};
+
+const Contact = () => {
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey="6LcGg5AjAAAAAMCfmWZm-uGEMNzMAPdBJiJgVO0B">
+      <_Contact />
+    </GoogleReCaptchaProvider>
   );
 };
 
