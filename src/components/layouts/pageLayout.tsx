@@ -19,6 +19,7 @@ export const PageLayout = ({ children, hero }: PageLayoutProps) => {
           src="../../images/redwood-background.jpeg"
           alt="redwood-background"
           placeholder="tracedSVG"
+          layout="fullWidth"
         />
       )}
       <main role="main">
