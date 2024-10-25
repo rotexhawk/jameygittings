@@ -109,7 +109,7 @@ const _Contact = () => {
             Contact
           </Heading>
           <p className="pb-6">
-            <a href="mailto:jamey@attilapress.com">jamey@attilapress.com</a>
+            <a href="mailto:jameygittings@gmail.com">jameygittings@gmail.com</a>
           </p>
           {apiError && (
             <Notification color="danger">
