@@ -161,9 +161,9 @@ export const Books = ({ blocks }) => {
               <Button><a target="_blank" rel="noreferrer" href="https://www.thriftbooks.com/w/jane_jamey-gittings/55230389/all-editions/?resultid=9384ef0c-8898-4ae4-ba37-6e83fc1f3448">Buy on Thriftbooks</a></Button>
               </Columns.Column>
               </Columns>
-              <ArrowLink to="/fetish/chapter-one" className="is-size-6">
+              {/* <ArrowLink to="/fetish/chapter-one" className="is-size-6">
                 <RightIcon />
-              </ArrowLink>
+              </ArrowLink> */}
             </BookContainer>
           </Columns>
         </Container>
