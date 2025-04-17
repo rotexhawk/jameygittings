@@ -62,6 +62,15 @@ export const Books = ({ blocks }) => {
           )
         }
       }
+      coming: file(relativePath: { regex: "/jane/" }) {
+      childImageSharp {
+        gatsbyImageData(
+          width: 300
+          placeholder: BLURRED
+          formats: [AUTO, WEBP, AVIF]
+        )
+      }
+    }
     }
   `);
 
