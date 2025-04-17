@@ -62,7 +62,7 @@ export const Books = ({ blocks }) => {
           )
         }
       }
-      coming: file(relativePath: { regex: "/jane/" }) {
+      jane: file(relativePath: { regex: "/jane/" }) {
       childImageSharp {
         gatsbyImageData(
           width: 300
@@ -99,7 +99,10 @@ export const Books = ({ blocks }) => {
   const attilaText = getBlockHtml("attila-begin", "fetish");
 
   const fetishTitle = getSingleBlock("fetish");
-  const fetishText = getBlockHtml("fetish-begin", "other-offerings");
+  const fetishText = getBlockHtml("fetish-begin", "jane-begin");
+
+  const janeTitle = getSingleBlock("jane"); 
+  const janeText = getBlockHtml("jane-begin", "other-offerings"); 
 
   return (
     <Box id="books">
@@ -144,6 +147,12 @@ export const Books = ({ blocks }) => {
             </BookContainer>
             <BookContainer image={images.coming} title={fetishTitle.innerHtml}>
               {fetishText}
+              <ArrowLink to="/fetish/chapter-one" className="is-size-6">
+                <RightIcon />
+              </ArrowLink>
+            </BookContainer>
+            <BookContainer image={images.jane} title={janeTitle.innerHtml}>
+              {janeText}
               <ArrowLink to="/fetish/chapter-one" className="is-size-6">
                 <RightIcon />
               </ArrowLink>
