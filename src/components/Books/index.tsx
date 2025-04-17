@@ -99,7 +99,7 @@ export const Books = ({ blocks }) => {
   const attilaText = getBlockHtml("attila-begin", "fetish");
 
   const fetishTitle = getSingleBlock("fetish");
-  const fetishText = getBlockHtml("fetish-begin", "jane-begin");
+  const fetishText = getBlockHtml("fetish-begin", "jane");
 
   const janeTitle = getSingleBlock("jane"); 
   const janeText = getBlockHtml("jane-begin", "other-offerings"); 
@@ -157,7 +157,6 @@ export const Books = ({ blocks }) => {
               <ArrowLink to="/fetish/chapter-one" className="is-size-6">
                 <RightIcon />
               </ArrowLink>
-
             </BookContainer>
           </Columns>
         </Container>
