@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "react-bulma-components";
+import { Box, Button } from "react-bulma-components";
 import {
   Section,
   Container,
@@ -153,9 +153,11 @@ export const Books = ({ blocks }) => {
             </BookContainer>
             <BookContainer image={images.jane} title={janeTitle.innerHtml}>
               {janeText}
+              <Button><a href="https://www.amazon.com/Jane-Jamey-Gittings/dp/B0F2ZNGJJQ/ref=sr_1_1?crid=3MTHBSZ9K16VV&dib=eyJ2IjoiMSJ9.hCC07RK5PcucbpxfGy19sAePg39x5QD2xfpP5L8L-2HGjHj071QN20LucGBJIEps.1cffqhCiMKV3teQl-Ydus7QVzHCoTV5vwgpCOgPSoFQ&dib_tag=se&keywords=jane+jamey+gittings&qid=1744853984&sprefix=jane+jamey+gittings%2Caps%2C79&sr=8-1">Buy on Amazon</a></Button>
               <ArrowLink to="/fetish/chapter-one" className="is-size-6">
                 <RightIcon />
               </ArrowLink>
+
             </BookContainer>
           </Columns>
         </Container>
