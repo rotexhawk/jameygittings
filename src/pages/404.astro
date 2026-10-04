@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<Base title="Page not found">
+  <Header />
+  <main id="main" class="nf section">
+    <div class="narrow">
+      <p class="eyebrow">404</p>
+      <h1>“Let’s walk in backwards, and pretend we’re just leaving.”</h1>
+      <p class="lead">This page doesn’t exist — but the stories do.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="/">Back to the home page <Icon name="arrow-right" /></a>
+        <a class="btn btn-outline" href="/#books">See the books</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .nf {
+    min-height: 70vh;
+    display: grid;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: var(--step-3);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import Base from "./Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow: string;
+  heading: string;
+  image: ImageMetadata;
+  imageAlt?: string;
+  imagePosition?: string;
+}
+
+const { title, description, eyebrow, heading, image, imageAlt = "", imagePosition = "50% 50%" } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <Header overlay />
+  <main id="main">
+    <section class="banner" aria-labelledby="page-title">
+      <Image
+        src={image}
+        alt={imageAlt}
+        class="banner-img"
+        widths={[800, 1400, 2000]}
+        sizes="100vw"
+        loading="eager"
+        style={`object-position: ${imagePosition}`}
+      />
+      <div class="banner-shade"></div>
+      <div class="container banner-inner">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1 id="page-title" set:html={heading} />
+      </div>
+    </section>
+    <slot />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .banner {
+    position: relative;
+    min-height: clamp(24rem, 62vh, 38rem);
+    display: grid;
+    align-items: end;
+    color: var(--on-night);
+    background: var(--night);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .banner :global(.banner-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .banner-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgb(10 8 6 / 0.5) 0%, rgb(10 8 6 / 0.15) 40%, rgb(10 8 6 / 0.82) 100%);
+  }
+
+  .banner-inner {
+    padding-block: 8rem 3.5rem;
+  }
+
+  .banner .eyebrow {
+    color: #f2c4a8;
+  }
+
+  .banner h1 {
+    font-size: var(--step-4);
+    max-width: 16ch;
+    line-height: 1;
+  }
+
+  .banner h1 :global(em) {
+    color: #f2c4a8;
+  }
+</style>

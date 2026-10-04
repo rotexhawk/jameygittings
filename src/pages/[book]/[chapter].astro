@@ -1,0 +1,646 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { getBook } from "../../data/books";
+
+export async function getStaticPaths() {
+  const all = await getCollection("chapters");
+  return all.map(entry => {
+    const [book, chapter] = entry.id.split("/");
+    const siblings = all.filter(c => c.data.book === entry.data.book).sort((a, b) => a.data.order - b.data.order);
+    return { params: { book, chapter }, props: { entry, siblings } };
+  });
+}
+
+const { entry, siblings } = Astro.props;
+const book = getBook(entry.data.book)!;
+const { Content } = await render(entry);
+
+const index = siblings.findIndex(s => s.id === entry.id);
+const prev = siblings[index - 1];
+const next = siblings[index + 1];
+const href = (id: string) => `/${id}/`;
+const words = (entry.body ?? "").replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(words / 230));
+const buy = book.buy[0];
+---
+
+<Base
+  title={`${entry.data.title} — ${book.shortTitle}`}
+  description={`Read “${entry.data.title},” a free excerpt from ${book.title} by Jamey Gittings.`}
+>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+  <header class="reader-bar">
+    <div class="reader-bar-inner">
+      <a class="back" href={`/#${book.slug}`}>
+        <Icon name="arrow-left" /><span>Jamey Gittings</span>
+      </a>
+      <p class="bar-title" aria-hidden="true">{book.title}</p>
+      <div class="bar-actions">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Dark mode" aria-pressed="false">
+          <Icon name="moon" class="i-moon" />
+          <Icon name="sun" class="i-sun" />
+        </button>
+        <button class="icon-btn toc-btn" type="button" aria-controls="toc" aria-expanded="false" data-toc-toggle>
+          <Icon name="list" /><span class="visually-hidden">Table of contents</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="reader">
+    <aside class="side" id="toc" aria-label="Table of contents" data-toc>
+      <div class="side-inner">
+        <a class="side-cover" href={`/#${book.slug}`} tabindex="-1" aria-hidden="true">
+          <Image src={book.cover} alt="" widths={[240, 480]} sizes="240px" />
+        </a>
+        <p class="side-book">{book.title}</p>
+        <p class="side-label">Contents</p>
+        <ol class="toc">
+          {
+            siblings.map(s => (
+              <li>
+                <a href={href(s.id)} aria-current={s.id === entry.id ? "page" : undefined}>
+                  <span class="toc-label">{s.data.label}</span>
+                  {s.data.label !== s.data.title && <span class="toc-title">{s.data.title}</span>}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="side-buy">
+          <a class="btn btn-primary" href={buy.href} target="_blank" rel="noopener">
+            Get the book <Icon name="external" /><span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <main id="main" class="page">
+      <article>
+        <header class="chapter-head">
+          <p class="kicker">{book.title}</p>
+          <p class="label">{entry.data.label}</p>
+          <h1>{entry.data.title}</h1>
+          {entry.data.note && <p class="note">{entry.data.note}</p>}
+          <p class="meta">{minutes} min read</p>
+          <div class="ornament" aria-hidden="true">✦ ✦ ✦</div>
+        </header>
+
+        <div class="chapter-text">
+          <Content />
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Chapter navigation">
+        {
+          prev ? (
+            <a class="pager-link prev" href={href(prev.id)} rel="prev">
+              <span class="pager-dir">
+                <Icon name="arrow-left" /> Previous
+              </span>
+              <span class="pager-title">{prev.data.title}</span>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          next ? (
+            <a class="pager-link next" href={href(next.id)} rel="next">
+              <span class="pager-dir">
+                Next: {next.data.label} <Icon name="arrow-right" />
+              </span>
+              <span class="pager-title">{next.data.title}</span>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+      </nav>
+
+      {
+        !next && (
+          <section class="end-card" aria-labelledby="end-title">
+            <Image src={book.cover} alt="" widths={[200, 400]} sizes="160px" class="end-cover" />
+            <div>
+              <p class="eyebrow">End of excerpt</p>
+              <h2 id="end-title">Keep reading {book.title}</h2>
+              <p>The story continues in the full novel, published by Attila Press.</p>
+              <div class="end-actions">
+                {book.buy.map(b => (
+                  <a class="btn btn-primary" href={b.href} target="_blank" rel="noopener">
+                    {b.label} <Icon name="external" />
+                    <span class="visually-hidden">(opens in a new tab)</span>
+                  </a>
+                ))}
+                <a class="btn btn-outline" href="/#books">
+                  Browse all books
+                </a>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <footer class="reader-foot">
+        <p>© {new Date().getFullYear()} Jamey Gittings. Excerpt shared by the author.</p>
+      </footer>
+    </main>
+  </div>
+  <div class="scrim" data-scrim hidden></div>
+</Base>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 70;
+    pointer-events: none;
+  }
+
+  .progress span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  /* Top bar -------------------------------------------------------------- */
+  .reader-bar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .reader-bar-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    min-height: 3.75rem;
+    padding-inline: var(--gutter);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    text-decoration: none;
+    justify-self: start;
+  }
+
+  .back :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .bar-title {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40ch;
+  }
+
+  .bar-actions {
+    display: flex;
+    justify-self: end;
+    gap: 0.25rem;
+  }
+
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease);
+  }
+
+  .icon-btn:hover {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  .icon-btn :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon-btn :global(.i-sun),
+  .icon-btn[aria-pressed="true"] :global(.i-moon) {
+    display: none;
+  }
+
+  .icon-btn[aria-pressed="true"] :global(.i-sun) {
+    display: block;
+  }
+
+  .toc-btn {
+    display: none;
+  }
+
+  /* Layout --------------------------------------------------------------- */
+  .reader {
+    display: grid;
+    grid-template-columns: 19rem minmax(0, 1fr);
+  }
+
+  .side {
+    border-right: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+
+  .side-inner {
+    position: sticky;
+    top: 3.75rem;
+    max-height: calc(100vh - 3.75rem);
+    overflow-y: auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .side-cover {
+    display: block;
+    width: 9.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .side-cover :global(img) {
+    filter: drop-shadow(0 14px 18px rgb(31 26 23 / 0.2));
+  }
+
+  .side-book {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.2;
+    margin: 0 0 2rem;
+  }
+
+  .side-label {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 0.5rem;
+  }
+
+  .toc {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+  }
+
+  .toc a {
+    display: block;
+    padding: 0.75rem 0 0.75rem 1rem;
+    border-left: 2px solid var(--rule);
+    text-decoration: none;
+    line-height: 1.35;
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .toc a:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .toc a[aria-current="page"] {
+    border-color: var(--accent);
+  }
+
+  .toc-label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .toc-title {
+    display: block;
+    font-size: 1rem;
+  }
+
+  .toc a[aria-current="page"] .toc-title,
+  .toc a[aria-current="page"] .toc-label {
+    color: var(--accent);
+  }
+
+  .side-buy .btn {
+    width: 100%;
+  }
+
+  /* Page ----------------------------------------------------------------- */
+  .page {
+    padding: clamp(3rem, 8vw, 6rem) var(--gutter) 0;
+    min-width: 0;
+  }
+
+  article,
+  .pager,
+  .end-card,
+  .reader-foot {
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+
+  .chapter-head {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .kicker {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .label {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .chapter-head h1 {
+    font-size: var(--step-4);
+    line-height: 1;
+  }
+
+  .note {
+    margin: 1rem 0 0;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .meta {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .chapter-text {
+    font-size: clamp(1.1rem, 1.05rem + 0.25vw, 1.25rem);
+    line-height: 1.8;
+    color: var(--ink);
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  .chapter-text :global(p) {
+    margin: 0;
+    text-indent: 1.5em;
+  }
+
+  .chapter-text :global(p:first-child) {
+    text-indent: 0;
+  }
+
+  .chapter-text :global(p:first-child::first-letter) {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 4.4em;
+    line-height: 0.8;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--accent);
+  }
+
+  /* Pager / end ---------------------------------------------------------- */
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pager-link {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+  }
+
+  .pager-link:hover {
+    border-color: var(--accent);
+    background: var(--paper-2);
+    color: inherit;
+  }
+
+  .pager-link.next {
+    text-align: right;
+    grid-column: 2;
+  }
+
+  .pager-dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+
+  .next .pager-dir {
+    justify-content: flex-end;
+  }
+
+  .pager-dir :global(svg) {
+    width: 15px;
+    height: 15px;
+  }
+
+  .pager-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  .end-card {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--paper-2);
+    border-radius: var(--radius);
+  }
+
+  .end-card :global(.end-cover) {
+    width: 100%;
+    filter: drop-shadow(0 14px 18px rgb(31 26 23 / 0.2));
+  }
+
+  .end-card h2 {
+    font-size: var(--step-2);
+    margin-bottom: 0.75rem;
+  }
+
+  .end-card p:not(.eyebrow) {
+    color: var(--ink-soft);
+  }
+
+  .end-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .reader-foot {
+    padding: 4rem 0 3rem;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 64;
+    background: rgb(10 8 6 / 0.45);
+  }
+
+  /* Responsive ----------------------------------------------------------- */
+  @media (max-width: 960px) {
+    .reader {
+      grid-template-columns: 1fr;
+    }
+
+    .toc-btn {
+      display: inline-grid;
+    }
+
+    .bar-title {
+      display: none;
+    }
+
+    .reader-bar-inner {
+      grid-template-columns: 1fr auto;
+    }
+
+    .side {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: min(20rem, 86vw);
+      z-index: 65;
+      transform: translateX(-102%);
+      visibility: hidden;
+      transition: transform 0.3s var(--ease), visibility 0s linear 0.3s;
+      box-shadow: var(--shadow);
+    }
+
+    .side.open {
+      transform: none;
+      visibility: visible;
+      transition: transform 0.3s var(--ease);
+    }
+
+    .side-inner {
+      top: 0;
+      max-height: 100vh;
+      height: 100%;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .pager {
+      grid-template-columns: 1fr;
+    }
+
+    .pager-link.next {
+      grid-column: 1;
+    }
+
+    .end-card {
+      grid-template-columns: 1fr;
+    }
+
+    .end-card :global(.end-cover) {
+      width: 7rem;
+    }
+  }
+</style>
+
+<script>
+  // Reading progress
+  const bar = document.querySelector<HTMLElement>("[data-progress]");
+  const article = document.querySelector("article");
+  if (bar && article) {
+    let ticking = false;
+    const update = () => {
+      const rect = article.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 1;
+      bar.style.transform = `scaleX(${p})`;
+      ticking = false;
+    };
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    update();
+  }
+
+  // Mobile table-of-contents drawer
+  const btn = document.querySelector<HTMLButtonElement>("[data-toc-toggle]");
+  const toc = document.querySelector<HTMLElement>("[data-toc]");
+  const scrim = document.querySelector<HTMLElement>("[data-scrim]");
+  if (btn && toc && scrim) {
+    const setOpen = (open: boolean) => {
+      toc.classList.toggle("open", open);
+      scrim.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+      if (open) toc.querySelector<HTMLElement>(".toc a")?.focus();
+    };
+    btn.addEventListener("click", () => setOpen(!toc.classList.contains("open")));
+    scrim.addEventListener("click", () => setOpen(false));
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && toc.classList.contains("open")) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+  }
+</script>

@@ -1,54 +1,32 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
+# jameygittings.com
 
-## 🚀 Quick start
+Author website for novelist Jamey Gittings, built with [Astro](https://astro.build) as a fully static site.
+(The previous Gatsby + WordPress version lost its backend; all content now lives in this repo.)
 
-1.  **Create a Gatsby site.**
+## Develop
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+```sh
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # outputs to dist/
+npm run preview
+```
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+## Where things live
 
-2.  **Start developing.**
+| What | Where |
+| --- | --- |
+| Book list, blurbs, covers, buy links | `src/data/books.ts` |
+| Sample chapters (HTML in Markdown) | `src/content/chapters/<book>/<chapter>.md` |
+| Home page | `src/pages/index.astro` |
+| Chapter reader | `src/pages/[book]/[chapter].astro` |
+| Design tokens (colors, type, spacing) | `src/styles/global.css` |
+| Images | `src/assets/images/` (optimized at build time) |
 
-    Navigate into your new site’s directory and start it up.
+To add a chapter, drop a new `.md` file in the book's folder with `book`, `order`, `label` and `title`
+front matter. It will appear in that book's table of contents and in the prev/next navigation automatically.
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+## Deploy
 
-3.  **Open the code and start customizing!**
-
-    Your site is now running at http://localhost:8000!
-
-    Edit `src/pages/index.js` to see your site update in real-time!
-
-4.  **Learn more**
-
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-## 🚀 Quick start (Gatsby Cloud)
-
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal)
+Hosted on Cloudflare Workers (static assets), configured in `wrangler.jsonc`. `npm run deploy` builds and deploys from your machine; pushes to `main` deploy automatically once the repo is connected in Cloudflare (Workers Builds).
+The contact form posts to the existing AWS Lambda endpoint, protected by reCAPTCHA v3.

@@ -1,0 +1,792 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { books, ATTILA_PRESS } from "../data/books";
+import hero from "../assets/images/hero.jpg";
+import portrait from "../assets/images/jamey-pic-two.jpg";
+import handsPortrait from "../assets/images/jamey-gittings.jpg";
+
+const chapters = (await getCollection("chapters")).sort((a, b) => a.data.order - b.data.order);
+const firstChapter = (slug: string) => {
+  const c = chapters.find(ch => ch.data.book === slug);
+  return c ? `/${c.id}/` : undefined;
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jamey Gittings",
+  url: "https://www.jameygittings.com",
+  jobTitle: "Novelist",
+  email: "mailto:jameygittings@gmail.com",
+  alumniOf: "University of Arizona",
+  homeLocation: ["Big Sur, California", "Arivaca, Arizona"],
+  sameAs: [ATTILA_PRESS],
+  workExample: books.map(b => ({ "@type": "Book", name: b.title, genre: b.genre, author: "Jamey Gittings" })),
+};
+
+const cares = [
+  ["The worth of each individual.", "Whomever, wherever, and whatever circumstances he or she find themselves."],
+  [
+    "The ability of people to rise above obstacles",
+    "imposed by birth, class, culture; by one’s own doing, or the doings of others. Fighting for right—Tilting at windmills.",
+  ],
+  [
+    "The language of how people talk to each other,",
+    "assert themselves, exchange information and ideas. The sound of language as it relates to context and setting.",
+  ],
+  [
+    "Humor and irony.",
+    "The ability to view and assess one’s self and other’s actions, conditions, and choices, within the context of humor and irony. To see the comedy of situations, even grave one’s — particularly grave ones.",
+  ],
+  [
+    "Unresolved questions and mysteries",
+    "and the struggle of both successful, and unsuccessful, attempts to resolve them. Particularly, the unsuccessful.",
+  ],
+];
+---
+
+<Base jsonLd={jsonLd}>
+  <Header overlay />
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <Image
+        src={hero}
+        alt=""
+        class="hero-img"
+        widths={[800, 1400, 2000, 2500]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="hero-shade"></div>
+      <div class="container hero-inner">
+        <p class="eyebrow hero-eyebrow">Novelist · Big Sur &amp; Arivaca</p>
+        <h1 id="hero-title">Stories of <em>Ironic</em> Justice.</h1>
+        <p class="hero-sub">
+          Mysteries, fantasy, social critique, spirituality — fiction that leaves readers a little better off
+          than when they picked up the book.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-light" href="#books">Explore the books <Icon name="arrow-right" /></a>
+          <a class="btn btn-ghost-light" href="/fetish/chapter-one/">
+            <Icon name="book-open" /> Read a first chapter
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Epigraph -->
+    <section class="epigraph section" aria-label="Epigraph">
+      <figure class="narrow" data-reveal>
+        <blockquote>
+          <p>
+            Work with all your intelligence<br />
+            And love.<br />
+            Work freely and rollickingly as though talking<br />
+            <span class="indent">… To a friend who loves you.</span><br />
+            Mentally (at least three or four times a day)<br />
+            Thumb your nose<br />
+            <span class="indent">At all the know-it-alls, jeerers, critics, doubters.</span>
+          </p>
+        </blockquote>
+        <figcaption>— Brenda Ueland</figcaption>
+      </figure>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about section" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <figure class="about-photo" data-reveal>
+          <Image
+            src={portrait}
+            alt="Jamey Gittings, standing among redwood greenery"
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 860px) 90vw, 40vw"
+          />
+        </figure>
+        <div class="about-copy" data-reveal>
+          <p class="eyebrow">About Jamey</p>
+          <h2 id="about-title" class="section-title">A writer independent of the publishing establishment.</h2>
+          <div class="prose">
+            <p class="dropcap">
+              Jamey Gittings is a fiction writer independent of the publication establishment, and the author of
+              five novels. He writes stories of Ironic Justice. Of varied themes, his fiction puts center stage,
+              justice in its ironical context. Whether mysteries, fantasy, social critique, spirituality, or short
+              stories, all his writing deals with social justice in an oblique, left-handed wild-ride, that leaves
+              readers a little better off than when they picked up the book. Isn’t that the reason to write fiction?
+            </p>
+            <p>
+              Prior to his life as a novelist, he worked for the United Nations, the Government of Afghanistan, and
+              with the Government of India, addressing issues of disability and international development. He holds
+              a Ph.D. from the University of Arizona in the areas of Special Education, Rehabilitation, and
+              Behavioral Psychology. He lives in Big Sur, California and Arivaca, Arizona.
+            </p>
+          </div>
+
+          <dl class="facts">
+            <div><dt>Novels</dt><dd>5</dd></div>
+            <div><dt>Ph.D.</dt><dd>U. of Arizona</dd></div>
+            <div><dt>Home</dt><dd>Big Sur &amp; Arivaca</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- How I got here -->
+    <section class="how section" aria-labelledby="how-title">
+      <div class="narrow" data-reveal>
+        <p class="eyebrow">How I Got Here</p>
+        <h2 id="how-title" class="section-title">If it’s a flying kiss at the wind, it’s my kiss.</h2>
+        <div class="prose">
+          <p>
+            I’ve included the quote by Brenda Ueland (formatted as a poem) as it precisely represents my approach to
+            writing and how the writing gets out there.
+          </p>
+          <p>
+            To take myself out of the third person: After a brief foray into what it takes to publish a book, and
+            conform to the requirements and stricture needed to submit a work to a publisher or agent, it struck me I
+            was back in Miss Muir’s 5th grade classroom doing endless long division homework, (perhaps valuable but
+            tedious). Pleading your case to be read by an agent or publisher, even if it’s not technically begging;
+            waiting-out long periods of darkness and silence to hear back the fate of your child — what parent would
+            endure that? Praying to the God of serendipity, for a chance encounter with a like-minded over-taxed
+            agent or publisher’s assistant to champion your book to those who count — I don’t have the lifespan for
+            that. So, I started my own publishing company. If it’s a flying kiss at the wind, it’s my kiss.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Books -->
+    <section id="books" class="books section" aria-labelledby="books-title">
+      <div class="container">
+        <header class="books-head" data-reveal>
+          <p class="eyebrow">My Books</p>
+          <h2 id="books-title" class="section-title">Five novels. One thread.</h2>
+          <p class="lead">
+            The thread that connects them is Ironic Justice in its various forms — justice that is a mirror image,
+            or at least a shadow, of the original crime.
+          </p>
+        </header>
+
+        <ol class="book-list">
+          {
+            books.map((book, i) => {
+              const read = book.hasExcerpt ? firstChapter(book.slug) : undefined;
+              return (
+                <li class:list={["book", { flip: i % 2 === 1 }]} id={book.slug} data-reveal>
+                  <div class="book-cover">
+                    <Image
+                      src={book.cover}
+                      alt={book.coverAlt}
+                      widths={[320, 480, 640, 871]}
+                      sizes="(max-width: 860px) 70vw, 30vw"
+                    />
+                  </div>
+                  <div class="book-body">
+                    <p class="book-meta">
+                      <span class="num">{String(i + 1).padStart(2, "0")}</span>
+                      <span>{book.genre}</span>
+                      {book.badge && <span class="badge">{book.badge}</span>}
+                    </p>
+                    <h3>{book.title}</h3>
+                    <p class="book-lede">{book.lede}</p>
+                    {book.body.map(p => (
+                      <p class="book-text">{p}</p>
+                    ))}
+                    <div class="book-actions">
+                      {read && (
+                        <a class="btn btn-primary" href={read}>
+                          <Icon name="book-open" /> Read an excerpt
+                        </a>
+                      )}
+                      {book.buy.map((b, j) => (
+                        <a
+                          class:list={["btn", read || j > 0 ? "btn-outline" : "btn-primary"]}
+                          href={b.href}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          {b.label} <Icon name="external" />
+                          <span class="visually-hidden">(opens in a new tab)</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- What I care about / readers -->
+    <section class="values section" aria-labelledby="values-title">
+      <div class="container values-grid">
+        <div class="values-photo" data-reveal>
+          <Image
+            src={handsPortrait}
+            alt="Black-and-white portrait of Jamey Gittings, hands clasped in thought"
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 860px) 90vw, 38vw"
+          />
+          <p class="photo-quote">
+            “Don’t trust anyone over the age of 11 months.”
+          </p>
+        </div>
+        <div class="values-copy" data-reveal>
+          <p class="eyebrow">What I Care About</p>
+          <h2 id="values-title" class="section-title">Start with a list of what you care about.</h2>
+          <p class="prose muted">
+            Kurt Vonnegut once said that an author must start with a list of what she or he cares about, or something
+            close. While he wasn’t the only one to say that, here are a few of mine:
+          </p>
+          <ol class="care-list">
+            {
+              cares.map(([head, rest]) => (
+                <li>
+                  <strong>{head}</strong> {rest}
+                </li>
+              ))
+            }
+          </ol>
+          <a class="text-link" href="/what-i-care-about/">Read the full list <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="readers section" aria-labelledby="readers-title">
+      <div class="container readers-grid" data-reveal>
+        <div>
+          <p class="eyebrow">What I Want From Readers</p>
+          <h2 id="readers-title" class="section-title">Readers who bring with them an attitude.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            In books on publishing and writing you find the oft-quoted truism that you must know the readers who you
+            write for, and tell them what you have to give them. I think this is the wrong-way-round. A more direct
+            approach is rather to ask, what the writer wants from his or her readers, so the reader doesn’t have to
+            waste their time on that particular author.
+          </p>
+          <ul class="reader-traits">
+            <li>Someone who is uncomfortable with the comfortable; someone who is suspicious of routine; with things as they are usually done.</li>
+            <li>Readers who bring with them an attitude, and don’t mind a writer who does the same.</li>
+          </ul>
+          <a class="text-link" href="/what-i-want-from-readers/">Are you that reader? <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attila Press -->
+    <section class="press" aria-labelledby="press-title">
+      <div class="container press-grid section">
+        <div data-reveal>
+          <p class="eyebrow press-eyebrow">The Publisher</p>
+          <h2 id="press-title" class="section-title">Attila Press</h2>
+          <p class="press-copy">
+            Attila Press, is currently a publisher solely of my own books, I know it’s as pompous and arrogant as an
+            attempt to cross Lake Superior on a rubber raft in November, but it’s a better than sitting in silent
+            vigil, and at least my grandchildren will have something to read. If I make it halfway across the lake,
+            I’ll open it up to other hapless authors in their winter years. So here goes.
+          </p>
+          <a class="btn btn-light" href={ATTILA_PRESS} target="_blank" rel="noopener">
+            Visit AttilaPress.com <Icon name="external" /><span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </div>
+        <aside class="offerings" data-reveal aria-labelledby="offer-title">
+          <h3 id="offer-title">Other Offerings</h3>
+          <p>
+            In addition to my books I have also authored short stories that I periodically provide for free viewing
+            on the website Attila Press. Click below if you’re interested.
+          </p>
+          <a class="btn btn-ghost-light" href={`${ATTILA_PRESS}/short-stories`} target="_blank" rel="noopener">
+            Read short stories <Icon name="arrow-right" /><span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  /* Hero ------------------------------------------------------------------ */
+  .hero {
+    position: relative;
+    min-height: min(100svh, 62rem);
+    display: grid;
+    align-items: end;
+    color: var(--on-night);
+    background: var(--night);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero :global(.hero-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 55% 40%;
+    z-index: -2;
+    animation: settle 2.4s var(--ease) both;
+  }
+
+  @keyframes settle {
+    from {
+      transform: scale(1.06);
+    }
+  }
+
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgb(10 8 6 / 0.45) 0%, rgb(10 8 6 / 0.1) 30%, rgb(10 8 6 / 0.35) 60%, rgb(10 8 6 / 0.85) 100%),
+      linear-gradient(90deg, rgb(10 8 6 / 0.55) 0%, rgb(10 8 6 / 0) 65%);
+  }
+
+  .hero-inner {
+    padding-block: 9rem clamp(3.5rem, 9vw, 7rem);
+  }
+
+  .hero-eyebrow {
+    color: #f2c4a8;
+  }
+
+  .hero h1 {
+    font-size: var(--step-4);
+    font-weight: 500;
+    line-height: 0.98;
+    max-width: 12ch;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 30px rgb(0 0 0 / 0.25);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: #f2c4a8;
+  }
+
+  .hero-sub {
+    max-width: 40ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: rgb(239 231 218 / 0.9);
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Epigraph -------------------------------------------------------------- */
+  .epigraph {
+    text-align: center;
+    background: var(--paper);
+  }
+
+  .epigraph figure {
+    margin-inline: auto;
+  }
+
+  .epigraph blockquote {
+    margin: 0;
+  }
+
+  .epigraph p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--step-2);
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .epigraph .indent {
+    display: inline-block;
+    padding-left: 1.5em;
+  }
+
+  .epigraph figcaption {
+    margin-top: 1.75rem;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* About ----------------------------------------------------------------- */
+  .about {
+    background: var(--paper-2);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+  }
+
+  .about-photo {
+    margin: 0;
+    position: relative;
+  }
+
+  .about-photo :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 25%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .about-photo::after {
+    content: "";
+    position: absolute;
+    inset: 1.25rem -1.25rem -1.25rem 1.25rem;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    z-index: -1;
+    opacity: 0.5;
+  }
+
+  .about-photo {
+    isolation: isolate;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: 2.5rem;
+    margin: 2.5rem 0 0;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .facts dt {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .facts dd {
+    margin: 0.2rem 0 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* How ------------------------------------------------------------------- */
+  .how .section-title {
+    font-style: italic;
+  }
+
+  /* Books ----------------------------------------------------------------- */
+  .books {
+    border-top: 1px solid var(--rule);
+  }
+
+  .books-head {
+    max-width: 44rem;
+    margin-bottom: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .book-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(4rem, 10vw, 8rem);
+  }
+
+  .book {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+    scroll-margin-top: 6rem;
+  }
+
+  .book.flip {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  }
+
+  .book.flip .book-cover {
+    order: 2;
+  }
+
+  .book-cover {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    isolation: isolate;
+  }
+
+  .book-cover::before {
+    content: "";
+    position: absolute;
+    inset: 12% 6% 4%;
+    background: radial-gradient(closest-side, var(--paper-3), transparent);
+    z-index: -1;
+  }
+
+  .book-cover :global(img) {
+    width: min(100%, 22rem);
+    filter: drop-shadow(0 24px 30px rgb(31 26 23 / 0.22));
+    transition: transform 0.6s var(--ease);
+  }
+
+  .book:hover .book-cover :global(img) {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+
+  .book-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .book-meta .num {
+    color: var(--accent);
+  }
+
+  .badge {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    letter-spacing: 0.1em;
+  }
+
+  .book h3 {
+    font-size: var(--step-3);
+    margin-bottom: 1.5rem;
+    max-width: 18ch;
+  }
+
+  .book-lede {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: var(--measure);
+  }
+
+  .book-text {
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+
+  .book-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  /* Values ---------------------------------------------------------------- */
+  .values {
+    background: var(--paper-2);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .values-photo {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .values-photo :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+    filter: grayscale(1);
+  }
+
+  .photo-quote {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--step-1);
+    color: var(--muted);
+  }
+
+  .muted {
+    color: var(--ink-soft);
+  }
+
+  .care-list {
+    list-style: none;
+    counter-reset: care;
+    margin: 2rem 0;
+    padding: 0;
+  }
+
+  .care-list li {
+    counter-increment: care;
+    position: relative;
+    padding: 1.25rem 0 1.25rem 3.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+  }
+
+  .care-list li:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .care-list li::before {
+    content: counter(care, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--accent);
+  }
+
+  .care-list strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Readers --------------------------------------------------------------- */
+  .readers-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .reader-traits {
+    list-style: none;
+    margin: 1.5rem 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .reader-traits li {
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--accent);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  /* Press ----------------------------------------------------------------- */
+  .press {
+    background: var(--night);
+    color: var(--on-night);
+  }
+
+  .press-eyebrow {
+    color: #f2c4a8;
+  }
+
+  .press-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: end;
+  }
+
+  .press .section-title {
+    font-size: var(--step-4);
+  }
+
+  .press-copy {
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: rgb(239 231 218 / 0.86);
+    max-width: 36em;
+    margin-bottom: 2rem;
+  }
+
+  .offerings {
+    padding: 2rem;
+    border: 1px solid rgb(239 231 218 / 0.18);
+    border-radius: var(--radius);
+    background: var(--night-2);
+  }
+
+  .offerings h3 {
+    font-size: var(--step-2);
+    margin-bottom: 1rem;
+  }
+
+  .offerings p {
+    color: var(--on-night-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Responsive ------------------------------------------------------------ */
+  @media (max-width: 860px) {
+    .about-grid,
+    .values-grid,
+    .readers-grid,
+    .press-grid,
+    .book {
+      grid-template-columns: 1fr;
+    }
+
+    .book.flip .book-cover {
+      order: 0;
+    }
+
+    .book-cover :global(img) {
+      width: min(70%, 18rem);
+    }
+
+    .about-photo {
+      max-width: 26rem;
+    }
+
+    .about-photo::after {
+      inset: 0.75rem -0.6rem -0.75rem 0.6rem;
+    }
+
+    .values-photo {
+      position: static;
+      max-width: 26rem;
+    }
+
+    .facts {
+      grid-template-columns: repeat(2, auto);
+      gap: 1.5rem 2.5rem;
+    }
+  }
+</style>

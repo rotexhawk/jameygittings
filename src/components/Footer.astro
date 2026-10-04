@@ -1,0 +1,105 @@
+---
+import { ATTILA_PRESS } from "../data/books";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container inner">
+    <div class="sign">
+      <p class="name">Jamey <em>Gittings</em></p>
+      <p class="tag">Stories of Ironic Justice. Big Sur, California &amp; Arivaca, Arizona.</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/#books">Books</a></li>
+        <li><a href="/what-i-care-about/">What I Care About</a></li>
+        <li><a href="/what-i-want-from-readers/">What I Want From Readers</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href={ATTILA_PRESS} rel="noopener">Attila Press</a></li>
+      </ul>
+    </nav>
+
+    <div class="contact">
+      <a href="mailto:jameygittings@gmail.com">jameygittings@gmail.com</a>
+    </div>
+  </div>
+  <div class="container legal">
+    <p>© {year} Jamey Gittings. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--paper-2);
+    border-top: 1px solid var(--rule);
+    padding-top: 4rem;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .inner {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1.4fr 1fr auto;
+    align-items: start;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+    line-height: 1;
+  }
+
+  .name em {
+    color: var(--accent);
+  }
+
+  .tag {
+    max-width: 28ch;
+    margin: 0;
+    color: var(--muted);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    text-decoration: none;
+  }
+
+  .contact a {
+    text-decoration: underline;
+    text-decoration-color: var(--rule-strong);
+  }
+
+  .legal {
+    margin-top: 3rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .legal p {
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .inner {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

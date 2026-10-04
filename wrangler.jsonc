@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jameygittings",
+  "compatibility_date": "2026-10-01",
+  // Static site: Astro builds to dist/, served by Workers static assets
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "dev.jameygittings.com", "custom_domain": true }]
+}

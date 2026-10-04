@@ -1,0 +1,119 @@
+---
+import Page from "../layouts/Page.astro";
+import Icon from "../components/Icon.astro";
+import redwoods from "../assets/images/redwood-background.jpeg";
+
+const traits = [
+  "Someone who is uncomfortable with the comfortable; someone who is suspicious with routine; with things as they are usually done.",
+  "Readers who bring with them an attitude, and don’t mind a writer who does the same.",
+  "People who cherish the ability to think differently; to approach things from an oblique perspective — who don’t trust anyone over the age of 11 months.",
+  "Readers with the Intellect to discern, who possess the ability to generalize, discriminate (that is, to see the subtle differences between apparently similar things), and who, in the end, can synthesize.",
+  "Persons who are intrepid. Those with the ability — willingly or haltingly — to assume and cope with risk. People who value those who overcome, act, and rise above, the condition of fear.",
+];
+---
+
+<Page
+  title="What I Want From Readers"
+  description="Rather than tailoring fiction to an audience, novelist Jamey Gittings describes the readers he hopes to find."
+  eyebrow="For readers"
+  heading="What I want <em>from</em> readers"
+  image={redwoods}
+  imagePosition="50% 60%"
+>
+  <section class="section">
+    <div class="narrow" data-reveal>
+      <div class="prose">
+        <p class="dropcap">
+          In books on publishing and writing you find the oft-quoted truism that you must know the readers who you
+          write for, and tell them what you have to give them. I think this is the wrong-way-round. A fiction writer
+          gives what he has to give, and attempts to modify or adapt this to a particular group or population seems,
+          if not wrong, at least not the point of good storytelling. A more direct approach is rather to ask, what the
+          writer wants from his or her readers, so the reader doesn’t have to waste their time on that particular
+          author. While the result of the two approaches are similar — to bring like-minded readers and authors
+          together — the latter strategy leaves both reader and writer intact. So all of that said, this is what I
+          look for in a reader:
+        </p>
+      </div>
+
+      <ul class="traits">
+        {traits.map(t => <li data-reveal>{t}</li>)}
+      </ul>
+
+      <figure class="pull" data-reveal>
+        <blockquote>
+          <p>
+            People who look failure in the eye and say, “Let’s walk in backwards, and pretend we’re just leaving.”
+          </p>
+        </blockquote>
+      </figure>
+
+      <p class="closing" data-reveal>These are the traits of readers that may like my books.</p>
+
+      <div class="cta" data-reveal>
+        <a class="btn btn-primary" href="/#books">Find your book <Icon name="arrow-right" /></a>
+        <a class="btn btn-outline" href="/what-i-care-about/">What I care about</a>
+      </div>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .traits {
+    list-style: none;
+    margin: 3rem 0;
+    padding: 0;
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .traits li {
+    position: relative;
+    padding-left: 2rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.45;
+  }
+
+  .traits li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-size: 0.8em;
+    color: var(--accent);
+  }
+
+  .pull {
+    margin: 4rem 0;
+    padding: 2.5rem 0;
+    border-block: 1px solid var(--rule-strong);
+    text-align: center;
+  }
+
+  .pull blockquote {
+    margin: 0;
+  }
+
+  .pull p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--step-2);
+    line-height: 1.3;
+    margin: 0;
+    color: var(--accent);
+  }
+
+  .closing {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    text-align: center;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+</style>

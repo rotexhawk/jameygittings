@@ -1,0 +1,130 @@
+---
+import Page from "../layouts/Page.astro";
+import Icon from "../components/Icon.astro";
+import sitting from "../assets/images/jamey-sitting.jpg";
+
+const cares = [
+  "The worth of each individual. Whomever, where ever, and whatever circumstances he or she find themselves.",
+  "The ability of people to rise above, obstacles (imposed by birth, class, culture, by one’s own doing, and the doings of others).",
+  "Fighting for rights — tilting against windmills.",
+  "The language of how people talk to each other, assert themselves, exchange information and ideas.",
+  "The sound of language as it relates to the context and setting.",
+  "Humor and irony. The ability to view and assess one’s own and other’s actions, conditions, and choices, with in the context of humor and irony.",
+  "To see the comedy of situations, even grave one’s—particularly grave ones.",
+  "The triumph and outrage brought about by the good and bad choices made by one’s self and others.",
+  "The ability to struggle. Struggle against power imposed by authority: imposed by people, by one’s own tendencies and history, by the powerful over the vulnerable.",
+  "Greed and selfishness. The insatiable wantonness of human kind over nature, and resources.",
+  "The stupidity of people in power—to impose their stupidity on others.",
+  "Imbalance, and its destructive nature.",
+  "Dumb motherfuckers.",
+  "Selflessness. The ability of persons to put their needs and wants on hold, to speak to the needs and wants of others.",
+  "Sacrifice.",
+  "Good teachers, good instruction, advice (good and bad), good educational situations and environments.",
+  "The ability to explain — to shine light on a situation or problem.",
+  "Chance, and the opportunity it presents.",
+  "Other cultures and the perspective they can bring.",
+  "Girls and women: their struggles for dignity, equality, and inclusion.",
+  "Persons with handicaps, challenges, disabilities, and their struggles for independence, dignity, equality, and inclusion.",
+  "Unresolved questions and mysteries—the struggle, both successful and unsuccessful attempts to resolve them. Particularly the unsuccessful.",
+  "Music. Rhythms, cadence, melodies, of both harmonious and discordant music. Of blues, classical, street, African, Caribbean, other musical strains — Indian (native American and East), Japanese and Eastern traditions. To be aware of the background sounds and rhythms that provides the supra-language-infra-structure of context.",
+  "The pearling sounds of language.",
+  "The natural world: it’s beauty, power, and vulnerability—its balance and aggressive harmonies.",
+  "Care for other bloods, and their right to exist—down to the smallest microbe.",
+  "The ability to think different, approach things from radical perspectives, don’t trust anyone over the age of 11 months.",
+  "Food & Drink—all kinds and cuisines, wine, alcohol, water.",
+  "Smells.",
+  "Light, in its various shades and colors. Its transforming properties.",
+  "Fairness, consideration, kindness, and grace.",
+  "Texture. The tactile joy of surfaces.",
+  "Intellect. The ability to discern. (To not passively take shit from no one.)",
+  "To generalize and discriminate. To synthesize.",
+  "Intrepidness. The ability (willingly or haltingly) to assume and cope with risk.",
+  "To overcome, act, and rise above, the condition of fear.",
+  "Love, to totally give yourself to another person, to a principle, or ideal.",
+];
+---
+
+<Page
+  title="What I Care About"
+  description="Following Kurt Vonnegut’s advice, novelist Jamey Gittings lists what he cares about — from the worth of each individual to the pearling sounds of language."
+  eyebrow="A list, after Vonnegut"
+  heading="What I <em>care</em> about"
+  image={sitting}
+  imageAlt="Jamey Gittings sitting on a porch among redwoods, holding a mug"
+  imagePosition="30% 35%"
+>
+  <section class="section">
+    <div class="narrow intro" data-reveal>
+      <p class="lead">
+        This list started out as an exercise for me, but quickly turned into an <em>Emperor has no clothes moment</em>,
+        so I thought I’d include it. Try it yourself—you’ll be surprised.
+      </p>
+    </div>
+
+    <ol class="container cares">
+      {
+        cares.map((c, i) => (
+          <li data-reveal>
+            <span class="n" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <p>{c}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="narrow outro" data-reveal>
+      <div class="ornament" aria-hidden="true">✦ ✦ ✦</div>
+      <a class="btn btn-primary" href="/what-i-want-from-readers/">
+        What I want from readers <Icon name="arrow-right" />
+      </a>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .intro {
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  .intro .lead {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .cares {
+    list-style: none;
+    padding: 0;
+    columns: 2 22rem;
+    column-gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  .cares li {
+    break-inside: avoid;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.75rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .n {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    line-height: 1.4;
+    color: var(--accent);
+  }
+
+  .cares p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  .outro {
+    text-align: center;
+    margin-top: 2rem;
+  }
+</style>

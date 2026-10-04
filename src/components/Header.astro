@@ -1,0 +1,285 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  /** Transparent over a dark hero until the page scrolls */
+  overlay?: boolean;
+}
+const { overlay = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const links = [
+  { href: "/#about", label: "About" },
+  { href: "/#books", label: "Books" },
+  { href: "/what-i-care-about/", label: "What I Care About" },
+  { href: "/what-i-want-from-readers/", label: "For Readers" },
+  { href: "/contact/", label: "Contact" },
+];
+const isCurrent = (href: string) => href.replace(/\/$/, "") === path;
+---
+
+<header class:list={["site-header", { overlay }]} data-header>
+  <div class="bar container">
+    <a class="wordmark" href="/" aria-label="Jamey Gittings, home">
+      Jamey <em>Gittings</em>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul>
+        {
+          links.map(l => (
+            <li>
+              <a href={l.href} aria-current={isCurrent(l.href) ? "page" : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Dark mode" aria-pressed="false">
+        <Icon name="moon" class="i-moon" />
+        <Icon name="sun" class="i-sun" />
+      </button>
+      <button
+        class="icon-btn menu-btn"
+        type="button"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        aria-label="Open menu"
+        data-menu-toggle
+      >
+        <Icon name="menu" class="i-open" />
+        <Icon name="x" class="i-close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--rule);
+    transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease), color 0.35s var(--ease);
+  }
+
+  .site-header.overlay {
+    position: fixed;
+    inset: 0 0 auto 0;
+  }
+
+  .site-header.overlay:not(.is-scrolled):not(.menu-open) {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: transparent;
+    color: var(--on-night);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 4.25rem;
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    color: inherit;
+  }
+
+  .wordmark em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .overlay:not(.is-scrolled):not(.menu-open) .wordmark em {
+    color: inherit;
+  }
+
+  .nav ul {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.85rem;
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.85;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0.6rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .nav a:hover,
+  .nav a[aria-current="page"] {
+    opacity: 1;
+    color: inherit;
+  }
+
+  .nav a:hover::after,
+  .nav a[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease);
+  }
+
+  .icon-btn:hover {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  .icon-btn :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon-btn :global(.i-sun),
+  .icon-btn[aria-pressed="true"] :global(.i-moon) {
+    display: none;
+  }
+
+  .icon-btn[aria-pressed="true"] :global(.i-sun) {
+    display: block;
+  }
+
+  .menu-btn {
+    display: none;
+  }
+
+  .menu-btn :global(.i-close),
+  .menu-btn[aria-expanded="true"] :global(.i-open) {
+    display: none;
+  }
+
+  .menu-btn[aria-expanded="true"] :global(.i-close) {
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .menu-btn {
+      display: inline-grid;
+    }
+
+    .nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      color: var(--ink);
+      border-bottom: 1px solid var(--rule);
+      box-shadow: var(--shadow);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s linear 0.25s;
+    }
+
+    .menu-open .nav {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+
+    .nav ul {
+      flex-direction: column;
+      padding: 0.5rem var(--gutter) 1.25rem;
+    }
+
+    .nav a {
+      width: 100%;
+      min-height: 52px;
+      padding: 0;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav a::after {
+      display: none;
+    }
+
+    .nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+
+  if (header) {
+    const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  if (header && toggle) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle("menu-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+    toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+    header.querySelectorAll(".nav a").forEach(a => a.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

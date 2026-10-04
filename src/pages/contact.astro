@@ -1,0 +1,328 @@
+---
+import Page from "../layouts/Page.astro";
+import Icon from "../components/Icon.astro";
+import redwoods from "../assets/images/redwood-background.jpeg";
+
+const RECAPTCHA_KEY = "6LcGg5AjAAAAAMCfmWZm-uGEMNzMAPdBJiJgVO0B";
+const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.on.aws/";
+---
+
+<Page
+  title="Contact"
+  description="Get in touch with novelist Jamey Gittings."
+  eyebrow="Correspondence"
+  heading="Write to <em>Jamey</em>"
+  image={redwoods}
+  imagePosition="50% 40%"
+>
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="aside" data-reveal>
+        <p class="lead">
+          Readers, reviewers, book clubs and booksellers are welcome. Send a note and Jamey will write back.
+        </p>
+        <a class="mail" href="mailto:jameygittings@gmail.com">
+          <Icon name="mail" />
+          jameygittings@gmail.com
+        </a>
+      </div>
+
+      <form class="form" novalidate data-contact data-endpoint={ENDPOINT} data-key={RECAPTCHA_KEY}>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error" />
+          <p class="error" id="name-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            inputmode="email"
+            required
+            aria-describedby="email-error"
+          />
+          <p class="error" id="email-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="7" required aria-describedby="message-error"></textarea>
+          <p class="error" id="message-error" aria-live="polite"></p>
+        </div>
+
+        <div class="submit-row">
+          <p class="fine">
+            Protected by reCAPTCHA. Google’s <a href="https://policies.google.com/privacy">Privacy Policy</a>{" and "}<a
+              href="https://policies.google.com/terms">Terms</a
+            > apply.
+          </p>
+          <button class="btn btn-primary" type="submit" data-submit>
+            <span data-label>Send message</span>
+            <Icon name="arrow-right" />
+          </button>
+        </div>
+
+        <div class="status" role="status" aria-live="polite" data-status hidden></div>
+      </form>
+    </div>
+  </section>
+</Page>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .aside .lead {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+
+  .mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .mail :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .form {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.9rem;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+
+  textarea {
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  [aria-invalid="true"] {
+    border-color: #b42318;
+  }
+
+  .error {
+    min-height: 1.2em;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: #b42318;
+  }
+
+  :global([data-theme="dark"]) .error,
+  :global([data-theme="dark"]) [aria-invalid="true"] {
+    color: #ff9b8f;
+    border-color: #ff9b8f;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .error {
+      color: #ff9b8f;
+    }
+    :global(:root:not([data-theme="light"])) [aria-invalid="true"] {
+      border-color: #ff9b8f;
+    }
+  }
+
+  .submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .fine {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  button[aria-busy="true"] {
+    opacity: 0.75;
+    cursor: progress;
+  }
+
+  .status {
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    border: 1px solid var(--rule-strong);
+    background: var(--paper);
+  }
+
+  .status.ok {
+    border-color: #3f7a4a;
+  }
+
+  .status.err {
+    border-color: #b42318;
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* reCAPTCHA badge is replaced by the inline notice above */
+  :global(.grecaptcha-badge) {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  declare const grecaptcha: {
+    ready(cb: () => void): void;
+    execute(key: string, opts: { action: string }): Promise<string>;
+  };
+
+  const form = document.querySelector<HTMLFormElement>("[data-contact]");
+
+  if (form) {
+    const key = form.dataset.key!;
+    const endpoint = form.dataset.endpoint!;
+    const status = form.querySelector<HTMLElement>("[data-status]")!;
+    const button = form.querySelector<HTMLButtonElement>("[data-submit]")!;
+    const label = form.querySelector<HTMLElement>("[data-label]")!;
+
+    // Load reCAPTCHA v3 lazily, on first interaction
+    let captcha: Promise<void> | undefined;
+    const loadCaptcha = () =>
+      (captcha ??= new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = `https://www.google.com/recaptcha/api.js?render=${key}`;
+        s.async = true;
+        s.onload = () => grecaptcha.ready(resolve);
+        s.onerror = () => reject(new Error("Could not load reCAPTCHA"));
+        document.head.appendChild(s);
+      }));
+    form.addEventListener("focusin", () => void loadCaptcha().catch(() => {}), { once: true });
+
+    const messages: Record<string, string> = {
+      name: "Please enter your name.",
+      email: "Please enter a valid email address.",
+      message: "Please write a message.",
+    };
+
+    const validate = (el: HTMLInputElement | HTMLTextAreaElement) => {
+      const ok = el.value.trim() !== "" && el.checkValidity();
+      el.setAttribute("aria-invalid", String(!ok));
+      const err = document.getElementById(`${el.id}-error`);
+      if (err) err.textContent = ok ? "" : messages[el.name];
+      return ok;
+    };
+
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("input, textarea"));
+    fields.forEach(el => {
+      el.addEventListener("blur", () => el.value && validate(el));
+      el.addEventListener("input", () => el.getAttribute("aria-invalid") === "true" && validate(el));
+    });
+
+    const showStatus = (text: string, kind: "ok" | "err") => {
+      status.hidden = false;
+      status.className = `status ${kind}`;
+      status.textContent = text;
+    };
+
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const invalid = fields.filter(f => !validate(f));
+      if (invalid.length) {
+        invalid[0].focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.setAttribute("aria-busy", "true");
+      label.textContent = "Sending…";
+      status.hidden = true;
+
+      try {
+        await loadCaptcha();
+        const token = await grecaptcha.execute(key, { action: "submit" });
+        const data = new FormData(form);
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: data.get("name"),
+            from: data.get("email"),
+            message: data.get("message"),
+            token,
+            website: "JameyGittings.com",
+          }),
+        });
+        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        form.reset();
+        fields.forEach(f => f.removeAttribute("aria-invalid"));
+        showStatus("Thank you — your message has been sent.", "ok");
+      } catch {
+        showStatus(
+          "Sorry, your message couldn’t be sent. Please try again, or email jameygittings@gmail.com directly.",
+          "err"
+        );
+      } finally {
+        button.disabled = false;
+        button.removeAttribute("aria-busy");
+        label.textContent = "Send message";
+      }
+    });
+  }
+</script>
