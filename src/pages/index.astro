@@ -165,12 +165,6 @@ const writerQuotes = [
               Arizona.
             </p>
           </div>
-
-          <dl class="facts">
-            <div><dt>Novels</dt><dd>5</dd></div>
-            <div><dt>Ph.D.</dt><dd>U. of Arizona</dd></div>
-            <div><dt>Home</dt><dd>Big Sur &amp; Arivaca</dd></div>
-          </dl>
         </div>
       </div>
     </section>
@@ -482,31 +476,6 @@ const writerQuotes = [
 
   .about-photo {
     isolation: isolate;
-  }
-
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: start;
-    gap: 2.5rem;
-    margin: 2.5rem 0 0;
-    padding-top: 1.75rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .facts dt {
-    font-family: var(--font-ui);
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .facts dd {
-    margin: 0.2rem 0 0;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    line-height: 1.2;
   }
 
   .greeting {
@@ -861,11 +830,6 @@ const writerQuotes = [
 
     .hero-sub br {
       display: none;
-    }
-
-    .facts {
-      grid-template-columns: repeat(2, auto);
-      gap: 1.5rem 2.5rem;
     }
   }
 </style>
