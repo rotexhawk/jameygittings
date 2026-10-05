@@ -173,13 +173,11 @@ const writerQuotes = [
     <section class="how section" aria-labelledby="how-title">
       <div class="container">
         <header class="how-head" data-reveal>
-          <p class="eyebrow">How I Got Here</p>
           <h2 id="how-title" class="section-title">A Flying Kiss</h2>
         </header>
 
         <div class="quote-group" data-reveal>
-          <h3>Principles I live and write by</h3>
-          <p class="quote-intro">Below are four:</p>
+          <h3 class="quote-heading-solo">Principles I live and write by</h3>
           <ul class="quote-list two-up">
             {
               principles.map(q => (
@@ -502,6 +500,10 @@ const writerQuotes = [
   .quote-group h3 {
     font-size: var(--step-2);
     margin-bottom: 0.5rem;
+  }
+
+  .quote-group h3.quote-heading-solo {
+    margin-bottom: 2rem;
   }
 
   .quote-intro {
