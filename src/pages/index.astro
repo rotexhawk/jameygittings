@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -9,12 +8,6 @@ import { books, ATTILA_PRESS } from "../data/books";
 import hero from "../assets/images/hero.jpg";
 import portrait from "../assets/images/jamey-pic-two.jpg";
 import handsPortrait from "../assets/images/jamey-gittings.jpg";
-
-const chapters = (await getCollection("chapters")).sort((a, b) => a.data.order - b.data.order);
-const firstChapter = (slug: string) => {
-  const c = chapters.find(ch => ch.data.book === slug);
-  return c ? `/${c.id}/` : undefined;
-};
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -225,7 +218,7 @@ const writerQuotes = [
         <ol class="book-list">
           {
             books.map((book, i) => {
-              const read = book.hasExcerpt ? firstChapter(book.slug) : undefined;
+              const buy = book.buy.filter(b => b.href !== ATTILA_PRESS);
               return (
                 <li class:list={["book", { flip: i % 2 === 1 }]} id={book.slug} data-reveal>
                   <div class="book-cover">
@@ -247,24 +240,21 @@ const writerQuotes = [
                     {book.body.map(p => (
                       <p class="book-text">{p}</p>
                     ))}
-                    <div class="book-actions">
-                      {read && (
-                        <a class="btn btn-primary" href={read}>
-                          <Icon name="book-open" /> Read an excerpt
-                        </a>
-                      )}
-                      {book.buy.map((b, j) => (
-                        <a
-                          class:list={["btn", read || j > 0 ? "btn-outline" : "btn-primary"]}
-                          href={b.href}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          {b.label} <Icon name="external" />
-                          <span class="visually-hidden">(opens in a new tab)</span>
-                        </a>
-                      ))}
-                    </div>
+                    {buy.length > 0 && (
+                      <div class="book-actions">
+                        {buy.map((b, j) => (
+                          <a
+                            class:list={["btn", j > 0 ? "btn-outline" : "btn-primary"]}
+                            href={b.href}
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            {b.label} <Icon name="external" />
+                            <span class="visually-hidden">(opens in a new tab)</span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </li>
               );
