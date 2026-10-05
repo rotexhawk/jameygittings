@@ -252,35 +252,6 @@ const writerQuotes = [
         </ol>
       </div>
     </section>
-
-    <!-- Attila Press -->
-    <section class="press" aria-labelledby="press-title">
-      <div class="container press-grid section">
-        <div data-reveal>
-          <p class="eyebrow press-eyebrow">The Publisher</p>
-          <h2 id="press-title" class="section-title">Attila Press</h2>
-          <p class="press-copy">
-            Attila Press, is currently a publisher solely of my own books, I know it’s as pompous and arrogant as an
-            attempt to cross Lake Superior on a rubber raft in November, but it’s a better than sitting in silent
-            vigil, and at least my grandchildren will have something to read. If I make it halfway across the lake,
-            I’ll open it up to other hapless authors in their winter years. So here goes.
-          </p>
-          <a class="btn btn-light" href={ATTILA_PRESS} target="_blank" rel="noopener">
-            Visit AttilaPress.com <Icon name="external" /><span class="visually-hidden">(opens in a new tab)</span>
-          </a>
-        </div>
-        <aside class="offerings" data-reveal aria-labelledby="offer-title">
-          <h3 id="offer-title">Other Offerings</h3>
-          <p>
-            In addition to my books I have also authored short stories that I periodically provide for free viewing
-            on the website Attila Press. Click below if you’re interested.
-          </p>
-          <a class="btn btn-ghost-light" href={`${ATTILA_PRESS}/short-stories`} target="_blank" rel="noopener">
-            Read short stories <Icon name="arrow-right" /><span class="visually-hidden">(opens in a new tab)</span>
-          </a>
-        </aside>
-      </div>
-    </section>
   </main>
 
   <Footer />
@@ -651,56 +622,9 @@ const writerQuotes = [
     margin-top: 2rem;
   }
 
-  /* Press ----------------------------------------------------------------- */
-  .press {
-    background: var(--night);
-    color: var(--on-night);
-  }
-
-  .press-eyebrow {
-    color: #f2c4a8;
-  }
-
-  .press-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: clamp(2.5rem, 6vw, 6rem);
-    align-items: end;
-  }
-
-  .press .section-title {
-    font-size: var(--step-4);
-  }
-
-  .press-copy {
-    font-size: var(--step-1);
-    line-height: 1.55;
-    color: rgb(239 231 218 / 0.86);
-    max-width: 36em;
-    margin-bottom: 2rem;
-  }
-
-  .offerings {
-    padding: 2rem;
-    border: 1px solid rgb(239 231 218 / 0.18);
-    border-radius: var(--radius);
-    background: var(--night-2);
-  }
-
-  .offerings h3 {
-    font-size: var(--step-2);
-    margin-bottom: 1rem;
-  }
-
-  .offerings p {
-    color: var(--on-night-muted);
-    margin-bottom: 1.5rem;
-  }
-
   /* Responsive ------------------------------------------------------------ */
   @media (max-width: 860px) {
     .about-grid,
-    .press-grid,
     .book {
       grid-template-columns: 1fr;
     }
