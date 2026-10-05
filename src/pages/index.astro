@@ -7,7 +7,6 @@ import Icon from "../components/Icon.astro";
 import { books, ATTILA_PRESS } from "../data/books";
 import hero from "../assets/images/hero.jpg";
 import portrait from "../assets/images/jamey-pic-two.jpg";
-import nycBigBookAward from "../assets/images/awards/nyc-big-book-award.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -208,14 +207,13 @@ const writerQuotes = [
                       sizes="(max-width: 860px) 70vw, 30vw"
                     />
                     {book.award && (
-                      <div class="award">
-                        <Image src={nycBigBookAward} alt="NYC Big Book Award" widths={[96, 192, 288]} sizes="96px" />
-                        <p>
-                          <span class="award-category">{book.award.category}</span>
-                          <span>{book.award.title}</span>
-                          <span>{book.award.name}</span>
-                        </p>
-                      </div>
+                      <Image
+                        class="award"
+                        src={book.award.image}
+                        alt={book.award.alt}
+                        widths={[300, 601]}
+                        sizes="16rem"
+                      />
                     )}
                   </div>
                   <div class="book-body">
@@ -530,47 +528,22 @@ const writerQuotes = [
     z-index: -1;
   }
 
-  .book-cover > :global(img) {
+  .book-cover > :global(img:not(.award)) {
     width: min(100%, 22rem);
     filter: drop-shadow(0 24px 30px rgb(31 26 23 / 0.22));
     transition: transform 0.6s var(--ease);
   }
 
-  .book:hover .book-cover > :global(img) {
+  .book:hover .book-cover > :global(img:not(.award)) {
     transform: translateY(-6px) rotate(-1deg);
   }
 
-  .award {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1.75rem;
-  }
-
-  .award :global(img) {
-    width: 6rem;
+  .book-cover :global(.award) {
+    width: min(100%, 16rem);
     height: auto;
-  }
-
-  .award p {
-    display: grid;
-    margin: 0;
-    font-family: var(--font-ui);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    line-height: 1.5;
-    color: var(--ink-soft);
-  }
-
-  .award .award-category {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: var(--accent-ink);
+    margin-top: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
   }
 
   .book-meta {
@@ -633,7 +606,7 @@ const writerQuotes = [
       order: 0;
     }
 
-    .book-cover > :global(img) {
+    .book-cover > :global(img:not(.award)) {
       width: min(70%, 18rem);
     }
 

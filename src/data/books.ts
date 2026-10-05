@@ -4,6 +4,7 @@ import jane from "../assets/images/covers/jane.webp";
 import eradication from "../assets/images/covers/eradication-of-smallpox.webp";
 import meat from "../assets/images/covers/meat-of-the-horse.webp";
 import attila from "../assets/images/covers/attila.webp";
+import nycBigBookAward from "../assets/images/awards/nyc-big-book-award-2026-distinguished-favorite.png";
 
 export const ATTILA_PRESS = "https://www.attilapress.com";
 
@@ -13,7 +14,7 @@ export interface Book {
   shortTitle: string;
   genre: string;
   badge?: string;
-  award?: { category: string; title: string; name: string };
+  award?: { image: ImageMetadata; alt: string };
   cover: ImageMetadata;
   coverAlt: string;
   lede: string;
@@ -79,7 +80,10 @@ export const books: Book[] = [
     title: "On the Eradication of Smallpox and the Intractability of Raccoons",
     shortTitle: "Eradication of Smallpox",
     genre: "Mystery · Ironic Justice",
-    award: { category: "Mystery", title: "Silver Medal Winner", name: "NYC Big Book Award" },
+    award: {
+      image: nycBigBookAward,
+      alt: "NYC Big Book Award, Distinguished Favorite 2026",
+    },
     cover: eradication,
     coverAlt:
       "Cover of On the Eradication of Smallpox and the Intractability of Raccoons — a raccoon and a syringe on red, white and blue",
