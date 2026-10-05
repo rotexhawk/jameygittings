@@ -3,8 +3,8 @@ import Page from "../layouts/Page.astro";
 import Icon from "../components/Icon.astro";
 import redwoods from "../assets/images/redwood-background.jpeg";
 
-const RECAPTCHA_KEY = "6LcGg5AjAAAAAMCfmWZm-uGEMNzMAPdBJiJgVO0B";
-const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.on.aws/";
+// Turnstile site key (public). The secret lives only in the Worker (TURNSTILE_SECRET_KEY).
+const TURNSTILE_SITE_KEY = "TURNSTILE_SITE_KEY_PENDING";
 ---
 
 <Page
@@ -15,6 +15,7 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
   image={redwoods}
   imagePosition="50% 40%"
 >
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <section class="section">
     <div class="container contact-grid">
       <div class="aside" data-reveal>
@@ -27,7 +28,10 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
         </a>
       </div>
 
-      <form class="form" novalidate data-contact data-endpoint={ENDPOINT} data-key={RECAPTCHA_KEY}>
+      <form class="form" method="POST" action="/api/contact" novalidate data-contact>
+        <p class="visually-hidden" aria-hidden="true">
+          <label>Don’t fill this out if you’re human: <input type="text" name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
         <div class="field">
           <label for="name">Name</label>
           <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error" />
@@ -52,12 +56,10 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
           <p class="error" id="message-error" aria-live="polite"></p>
         </div>
 
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="auto"></div>
+
         <div class="submit-row">
-          <p class="fine">
-            Protected by reCAPTCHA. Google’s <a href="https://policies.google.com/privacy">Privacy Policy</a>{" and "}<a
-              href="https://policies.google.com/terms">Terms</a
-            > apply.
-          </p>
+          <p class="fine">Protected against spam by Cloudflare Turnstile.</p>
           <button class="btn btn-primary" type="submit" data-submit>
             <span data-label>Send message</span>
             <Icon name="arrow-right" />
@@ -220,40 +222,24 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
       grid-template-columns: 1fr;
     }
   }
-
-  /* reCAPTCHA badge is replaced by the inline notice above */
-  :global(.grecaptcha-badge) {
-    visibility: hidden;
-  }
 </style>
 
 <script>
-  declare const grecaptcha: {
-    ready(cb: () => void): void;
-    execute(key: string, opts: { action: string }): Promise<string>;
-  };
+  type Turnstile = { reset: () => void };
+  const turnstile = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
 
   const form = document.querySelector<HTMLFormElement>("[data-contact]");
 
   if (form) {
-    const key = form.dataset.key!;
-    const endpoint = form.dataset.endpoint!;
     const status = form.querySelector<HTMLElement>("[data-status]")!;
     const button = form.querySelector<HTMLButtonElement>("[data-submit]")!;
     const label = form.querySelector<HTMLElement>("[data-label]")!;
 
-    // Load reCAPTCHA v3 lazily, on first interaction
-    let captcha: Promise<void> | undefined;
-    const loadCaptcha = () =>
-      (captcha ??= new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = `https://www.google.com/recaptcha/api.js?render=${key}`;
-        s.async = true;
-        s.onload = () => grecaptcha.ready(resolve);
-        s.onerror = () => reject(new Error("Could not load reCAPTCHA"));
-        document.head.appendChild(s);
-      }));
-    form.addEventListener("focusin", () => void loadCaptcha().catch(() => {}), { once: true });
+    const errors: Record<string, string> = {
+      captcha: "Please complete the “I’m not a robot” check, then send again.",
+      invalid: "Please fill in your name, a valid email address, and a message.",
+      send: "Sorry, your message couldn’t be sent. Please try again, or email jameygittings@gmail.com directly.",
+    };
 
     const messages: Record<string, string> = {
       name: "Please enter your name.",
@@ -269,7 +255,9 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
       return ok;
     };
 
-    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("input, textarea"));
+    const fields = ["name", "email", "message"].map(
+      id => document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement
+    );
     fields.forEach(el => {
       el.addEventListener("blur", () => el.value && validate(el));
       el.addEventListener("input", () => el.getAttribute("aria-invalid") === "true" && validate(el));
@@ -280,6 +268,11 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
       status.className = `status ${kind}`;
       status.textContent = text;
     };
+
+    // No-JS fallback: the Worker redirects back here with ?sent=1 or ?error=<code>
+    const params = new URLSearchParams(location.search);
+    if (params.get("sent") === "1") showStatus("Thank you — your message has been sent.", "ok");
+    else if (params.get("error")) showStatus(errors[params.get("error")!] ?? errors.send, "err");
 
     form.addEventListener("submit", async e => {
       e.preventDefault();
@@ -295,30 +288,20 @@ const ENDPOINT = "https://fqsx4sfudtka7d5wjfdk4qoosq0flojy.lambda-url.us-east-1.
       status.hidden = true;
 
       try {
-        await loadCaptcha();
-        const token = await grecaptcha.execute(key, { action: "submit" });
-        const data = new FormData(form);
-        const res = await fetch(endpoint, {
+        const res = await fetch(form.action, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: data.get("name"),
-            from: data.get("email"),
-            message: data.get("message"),
-            token,
-            website: "JameyGittings.com",
-          }),
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
         });
-        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+        if (!res.ok || !data.ok) throw new Error(data.error ?? errors.send);
         form.reset();
         fields.forEach(f => f.removeAttribute("aria-invalid"));
-        showStatus("Thank you — your message has been sent.", "ok");
-      } catch {
-        showStatus(
-          "Sorry, your message couldn’t be sent. Please try again, or email jameygittings@gmail.com directly.",
-          "err"
-        );
+        showStatus("Thank you — your message has been sent. Jamey will reply to the email address you gave.", "ok");
+      } catch (err) {
+        showStatus(err instanceof Error && err.message ? err.message : errors.send, "err");
       } finally {
+        turnstile()?.reset();
         button.disabled = false;
         button.removeAttribute("aria-busy");
         label.textContent = "Send message";
