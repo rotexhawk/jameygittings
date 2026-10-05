@@ -223,29 +223,6 @@ const writerQuotes = [
       </div>
     </section>
 
-    <!-- What I want from readers -->
-    <section class="readers section" aria-labelledby="readers-title">
-      <div class="container readers-grid" data-reveal>
-        <div>
-          <p class="eyebrow">What I Want From Readers</p>
-          <h2 id="readers-title" class="section-title">Readers who bring with them an attitude.</h2>
-        </div>
-        <div class="prose">
-          <p>
-            In books on publishing and writing you find the oft-quoted truism that you must know the readers who you
-            write for, and tell them what you have to give them. I think this is the wrong-way-round. A more direct
-            approach is rather to ask, what the writer wants from his or her readers, so the reader doesn’t have to
-            waste their time on that particular author.
-          </p>
-          <ul class="reader-traits">
-            <li>Someone who is uncomfortable with the comfortable; someone who is suspicious of routine; with things as they are usually done.</li>
-            <li>Readers who bring with them an attitude, and don’t mind a writer who does the same.</li>
-          </ul>
-          <a class="text-link" href="/what-i-want-from-readers/">Are you that reader? <Icon name="arrow-right" /></a>
-        </div>
-      </div>
-    </section>
-
     <!-- Books -->
     <section id="books" class="books section" aria-labelledby="books-title">
       <div class="container">
@@ -806,35 +783,6 @@ const writerQuotes = [
     color: var(--ink);
   }
 
-  /* Readers --------------------------------------------------------------- */
-  .readers {
-    border-top: 1px solid var(--rule);
-  }
-
-  .readers-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(2rem, 6vw, 6rem);
-  }
-
-  .reader-traits {
-    list-style: none;
-    margin: 1.5rem 0;
-    padding: 0;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .reader-traits li {
-    padding-left: 1.5rem;
-    border-left: 2px solid var(--accent);
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-style: italic;
-    line-height: 1.4;
-    color: var(--ink);
-  }
-
   /* Press ----------------------------------------------------------------- */
   .press {
     background: var(--night);
@@ -885,7 +833,6 @@ const writerQuotes = [
   @media (max-width: 860px) {
     .about-grid,
     .values-grid,
-    .readers-grid,
     .press-grid,
     .book {
       grid-template-columns: 1fr;
