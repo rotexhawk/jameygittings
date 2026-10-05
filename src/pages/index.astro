@@ -237,11 +237,11 @@ const writerQuotes = [
                     />
                   </div>
                   <div class="book-body">
-                    <p class="book-meta">
-                      <span class="num">{String(i + 1).padStart(2, "0")}</span>
-                      <span>{book.genre}</span>
-                      {book.badge && <span class="badge">{book.badge}</span>}
-                    </p>
+                    {book.badge && (
+                      <p class="book-meta">
+                        <span class="badge">{book.badge}</span>
+                      </p>
+                    )}
                     <h3>{book.title}</h3>
                     <p class="book-lede">{book.lede}</p>
                     {book.body.map(p => (
@@ -637,10 +637,6 @@ const writerQuotes = [
     text-transform: uppercase;
     color: var(--muted);
     margin-bottom: 1rem;
-  }
-
-  .book-meta .num {
-    color: var(--accent);
   }
 
   .badge {
