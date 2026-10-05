@@ -21,19 +21,6 @@ const traits = [
 >
   <section class="section">
     <div class="narrow" data-reveal>
-      <div class="prose">
-        <p class="dropcap">
-          In books on publishing and writing you find the oft-quoted truism that you must know the readers who you
-          write for, and tell them what you have to give them. I think this is the wrong-way-round. A fiction writer
-          gives what he has to give, and attempts to modify or adapt this to a particular group or population seems,
-          if not wrong, at least not the point of good storytelling. A more direct approach is rather to ask, what the
-          writer wants from his or her readers, so the reader doesn’t have to waste their time on that particular
-          author. While the result of the two approaches are similar — to bring like-minded readers and authors
-          together — the latter strategy leaves both reader and writer intact. So all of that said, this is what I
-          look for in a reader:
-        </p>
-      </div>
-
       <ul class="traits">
         {traits.map(t => <li data-reveal>{t}</li>)}
       </ul>
@@ -59,7 +46,7 @@ const traits = [
 <style>
   .traits {
     list-style: none;
-    margin: 3rem 0;
+    margin: 0 0 3rem;
     padding: 0;
     display: grid;
     gap: 1.75rem;
