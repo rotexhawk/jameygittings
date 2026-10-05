@@ -8,6 +8,7 @@ import { books, ATTILA_PRESS } from "../data/books";
 import hero from "../assets/images/hero.jpg";
 import portrait from "../assets/images/jamey-pic-two.jpg";
 import handsPortrait from "../assets/images/jamey-gittings.jpg";
+import nycBigBookAward from "../assets/images/awards/nyc-big-book-award.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -227,6 +228,16 @@ const writerQuotes = [
                       widths={[320, 480, 640, 871]}
                       sizes="(max-width: 860px) 70vw, 30vw"
                     />
+                    {book.award && (
+                      <div class="award">
+                        <Image src={nycBigBookAward} alt="NYC Big Book Award" widths={[96, 192, 288]} sizes="96px" />
+                        <p>
+                          <span class="award-category">{book.award.category}</span>
+                          <span>{book.award.title}</span>
+                          <span>{book.award.name}</span>
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <div class="book-body">
                     {book.badge && (
@@ -278,8 +289,7 @@ const writerQuotes = [
           </p>
         </div>
         <div class="values-copy" data-reveal>
-          <p class="eyebrow">What I Care About</p>
-          <h2 id="values-title" class="section-title">Start with a list of what you care about.</h2>
+          <h2 id="values-title" class="section-title">What I Care About</h2>
           <p class="prose muted">
             Kurt Vonnegut once said that an author must start with a list of what she or he cares about, or something
             close. While he wasn’t the only one to say that, here are a few of mine:
@@ -604,14 +614,47 @@ const writerQuotes = [
     z-index: -1;
   }
 
-  .book-cover :global(img) {
+  .book-cover > :global(img) {
     width: min(100%, 22rem);
     filter: drop-shadow(0 24px 30px rgb(31 26 23 / 0.22));
     transition: transform 0.6s var(--ease);
   }
 
-  .book:hover .book-cover :global(img) {
+  .book:hover .book-cover > :global(img) {
     transform: translateY(-6px) rotate(-1deg);
+  }
+
+  .award {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+
+  .award :global(img) {
+    width: 6rem;
+    height: auto;
+  }
+
+  .award p {
+    display: grid;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .award .award-category {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--accent-ink);
   }
 
   .book-meta {
@@ -793,7 +836,7 @@ const writerQuotes = [
       order: 0;
     }
 
-    .book-cover :global(img) {
+    .book-cover > :global(img) {
       width: min(70%, 18rem);
     }
 

@@ -13,6 +13,7 @@ export interface Book {
   shortTitle: string;
   genre: string;
   badge?: string;
+  award?: { category: string; title: string; name: string };
   cover: ImageMetadata;
   coverAlt: string;
   lede: string;
@@ -78,6 +79,7 @@ export const books: Book[] = [
     title: "On the Eradication of Smallpox and the Intractability of Raccoons",
     shortTitle: "Eradication of Smallpox",
     genre: "Mystery · Ironic Justice",
+    award: { category: "Mystery", title: "Silver Medal Winner", name: "NYC Big Book Award" },
     cover: eradication,
     coverAlt:
       "Cover of On the Eradication of Smallpox and the Intractability of Raccoons — a raccoon and a syringe on red, white and blue",
