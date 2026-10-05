@@ -212,8 +212,8 @@ const writerQuotes = [
                           class="award"
                           src={book.award.image}
                           alt={book.award.alt}
-                          widths={[180, 360, 568]}
-                          sizes="10.5rem"
+                          widths={[180, 360, 672]}
+                          sizes="12.5rem"
                         />
                       )}
                     </div>
@@ -548,11 +548,10 @@ const writerQuotes = [
   /* Award seal sits on the cover like a sticker */
   .cover-frame :global(.award) {
     position: absolute;
-    right: -3.75rem;
-    bottom: -3.25rem;
-    width: clamp(7rem, 46%, 10.5rem);
+    right: -4.5rem;
+    bottom: -4rem;
+    width: clamp(8rem, 54%, 12.5rem);
     height: auto;
-    border-radius: 50%;
     transform: rotate(-8deg);
     filter: drop-shadow(0 6px 12px rgb(31 26 23 / 0.3));
   }
@@ -609,7 +608,8 @@ const writerQuotes = [
   /* Responsive ------------------------------------------------------------ */
   @media (max-width: 860px) {
     .about-grid,
-    .book {
+    .book,
+    .book.flip {
       grid-template-columns: 1fr;
     }
 
@@ -619,6 +619,12 @@ const writerQuotes = [
 
     .cover-frame {
       width: min(70%, 18rem);
+    }
+
+    .cover-frame :global(.award) {
+      right: -3rem;
+      bottom: -3.25rem;
+      width: 6.75rem;
     }
 
     .about-photo {
