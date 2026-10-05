@@ -22,7 +22,16 @@ export interface Book {
   buy: { label: string; href: string }[];
 }
 
-const pressLink = [{ label: "Buy from Attila Press", href: ATTILA_PRESS }];
+const stores = (amazon: string, thriftbooks: string) => [
+  { label: "Buy from Amazon", href: amazon },
+  { label: "Buy from Thriftbooks", href: thriftbooks },
+];
+
+/** Store search links for books without a known product page */
+const search = (title: string) => {
+  const q = encodeURIComponent(`${title} Jamey Gittings`);
+  return stores(`https://www.amazon.com/s?k=${q}&i=stripbooks`, `https://www.thriftbooks.com/browse/?b.search=${q}`);
+};
 
 export const books: Book[] = [
   {
@@ -38,7 +47,7 @@ export const books: Book[] = [
       "Forced to contend with her mixed Native American and Anglo heritage, the effects of her cerebral palsy, and a troubled past, she reluctantly assumes the mantle of shaman for her tribe, as she stumbles through the dangerous alchemy necessity to her survival in a struggle to transform imbalance into balance, as she creates a place for herself among her people and her ancestors.",
     ],
     hasExcerpt: true,
-    buy: pressLink,
+    buy: search("Fetish"),
   },
   {
     slug: "jane",
@@ -55,11 +64,11 @@ export const books: Book[] = [
     hasExcerpt: false,
     buy: [
       {
-        label: "Buy on Amazon",
+        label: "Buy from Amazon",
         href: "https://www.amazon.com/Jane-Jamey-Gittings/dp/B0F2ZNGJJQ",
       },
       {
-        label: "Buy on Thriftbooks",
+        label: "Buy from Thriftbooks",
         href: "https://www.thriftbooks.com/w/jane_jamey-gittings/55230389/all-editions/",
       },
     ],
@@ -78,7 +87,7 @@ export const books: Book[] = [
       "Told in a smart, fast-paced way, On the Eradication of Smallpox and the Intractability of Raccoons is both a raucous ride and an illuminating, timeless examination of our politics, our progress and regress, and our recessions from reason.",
     ],
     hasExcerpt: true,
-    buy: pressLink,
+    buy: search("On the Eradication of Smallpox and the Intractability of Raccoons"),
   },
   {
     slug: "meat-of-the-horse",
@@ -93,7 +102,10 @@ export const books: Book[] = [
       "In this story spanning newsrooms in Arizona and Montana, hotels and restaurants, and underground clubs in France, slaughterhouse backrooms in Canada and wild mustang ranges of the high plains, Ned tugs at loose ends, trying to discover where they lead. Amid the surprising turns, profound truths are revealed about where common good and craven self-interests converge and depart, the malignant forces that hide in plain sight, and the renewal of love.",
     ],
     hasExcerpt: true,
-    buy: pressLink,
+    buy: stores(
+      "https://www.amazon.com/Meat-Horse-Jamey-Gittings/dp/1792357559",
+      "https://www.thriftbooks.com/w/meat-of-the-horse/34566987/",
+    ),
   },
   {
     slug: "attila",
@@ -108,7 +120,7 @@ export const books: Book[] = [
       "Along the way, Mason falls in love and reflects on the nature and power of that love, not only for his girlfriend, Holly, but for his divorced parents, and humanity in general. The story, informed by the author’s own experiences in the field and burnished by imagination, is by turns hopeful and cynical, a work of fiction and a stark warning.",
     ],
     hasExcerpt: true,
-    buy: pressLink,
+    buy: search("Knock Three Times and Ask for Attila"),
   },
 ];
 

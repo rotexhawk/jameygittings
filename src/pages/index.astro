@@ -218,7 +218,6 @@ const writerQuotes = [
         <ol class="book-list">
           {
             books.map((book, i) => {
-              const buy = book.buy.filter(b => b.href !== ATTILA_PRESS);
               return (
                 <li class:list={["book", { flip: i % 2 === 1 }]} id={book.slug} data-reveal>
                   <div class="book-cover">
@@ -240,9 +239,9 @@ const writerQuotes = [
                     {book.body.map(p => (
                       <p class="book-text">{p}</p>
                     ))}
-                    {buy.length > 0 && (
+                    {book.buy.length > 0 && (
                       <div class="book-actions">
-                        {buy.map((b, j) => (
+                        {book.buy.map((b, j) => (
                           <a
                             class:list={["btn", j > 0 ? "btn-outline" : "btn-primary"]}
                             href={b.href}
