@@ -5,7 +5,6 @@ import redwoods from "../assets/images/redwood-background.jpeg";
 
 const traits = [
   "Someone who is uncomfortable with the comfortable; someone who is suspicious with routine; with things as they are usually done.",
-  "Readers who bring with them an attitude, and don’t mind a writer who does the same.",
   "People who cherish the ability to think differently; to approach things from an oblique perspective — who don’t trust anyone over the age of 11 months.",
   "Persons who are intrepid. Those with the ability — willingly or haltingly — to assume and cope with risk. People who value those who overcome, act, and rise above, the condition of fear.",
 ];
@@ -21,6 +20,12 @@ const traits = [
 >
   <section class="section">
     <div class="narrow" data-reveal>
+      <figure class="pull lead-pull" data-reveal>
+        <blockquote>
+          <p>Readers who bring with them an attitude, and don’t mind a writer who does the same.</p>
+        </blockquote>
+      </figure>
+
       <ul class="traits">
         {traits.map(t => <li data-reveal>{t}</li>)}
       </ul>
@@ -74,6 +79,10 @@ const traits = [
     padding: 2.5rem 0;
     border-block: 1px solid var(--rule-strong);
     text-align: center;
+  }
+
+  .lead-pull {
+    margin-top: 0;
   }
 
   .pull blockquote {
