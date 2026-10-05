@@ -4,7 +4,7 @@ import jane from "../assets/images/covers/jane.webp";
 import eradication from "../assets/images/covers/eradication-of-smallpox.webp";
 import meat from "../assets/images/covers/meat-of-the-horse.webp";
 import attila from "../assets/images/covers/attila.webp";
-import nycBigBookAward from "../assets/images/awards/nyc-big-book-award-2026-distinguished-favorite.png";
+import nycBigBookAward from "../assets/images/awards/nyc-big-book-award-2026-seal.png";
 
 export const ATTILA_PRESS = "https://www.attilapress.com";
 
